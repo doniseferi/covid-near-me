@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  postgis:
+    image: "ukgeoboundaries:${VERSION:-1}"
+    build:
+      context: .
+      dockerfile: ./src/db/DOCKERFILE
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "25432:5432"

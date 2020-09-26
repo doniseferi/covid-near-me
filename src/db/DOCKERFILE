@@ -1,0 +1,7 @@
+FROM postgis/postgis:12-3.0-alpine
+COPY src/db/dump.7z .
+RUN apk add --update p7zip
+RUN p7zip -d dump.7z
+RUN cp dump.sql /docker-entrypoint-initdb.d/
+RUN rm dump.sql
+RUN apk del p7zip
