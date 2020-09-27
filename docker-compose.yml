@@ -1,12 +1,22 @@
 version: "3.8"
 
 services:
-  postgis:
-    image: "ukgeoboundaries:${VERSION:-1}"
+  db:
+    image: "uk-geoboundaries:${VERSION:-1}"
     build:
       context: .
-      dockerfile: ./src/db/DOCKERFILE
+      dockerfile: ./db/DOCKERFILE
     environment:
       POSTGRES_PASSWORD: password
     ports:
       - "25432:5432"
+
+  # web:
+  #   image: "covid-near-me:${VERSION:-1}"
+  #   build:
+  #     context: .
+  #     dockerfile: ./src/DOCKERFILE
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - db
