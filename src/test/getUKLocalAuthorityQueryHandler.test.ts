@@ -1,4 +1,4 @@
-import { getLocalAuthorityQueryHandlerAsync } from "../pages/api/getLocalAuthorityQueryHandlerAsync";
+import { getUKLocalAuthorityQueryHandlerAsync } from "../pages/api/getUKLocalAuthorityQueryHandlerAsync";
 
 describe("Get local authority query handler", async () => {
   it("returns Westminster when I am at the Big Ben", async () => {
@@ -6,7 +6,7 @@ describe("Get local authority query handler", async () => {
     const {
       localAuthorityCode,
       localAuthorityName,
-    } = await getLocalAuthorityQueryHandlerAsync({ latitude, longitude });
+    } = await getUKLocalAuthorityQueryHandlerAsync({ latitude, longitude });
     expect(localAuthorityCode).toEqual("E09000033");
     expect(localAuthorityName).toEqual("Westminster");
   });
@@ -15,7 +15,7 @@ describe("Get local authority query handler", async () => {
     const {
       localAuthorityCode,
       localAuthorityName,
-    } = await getLocalAuthorityQueryHandlerAsync({ latitude, longitude });
+    } = await getUKLocalAuthorityQueryHandlerAsync({ latitude, longitude });
     expect(localAuthorityCode).toEqual("S12000034");
     expect(localAuthorityName).toEqual("Aberdeenshire");
   });
@@ -24,7 +24,7 @@ describe("Get local authority query handler", async () => {
     const {
       localAuthorityCode,
       localAuthorityName,
-    } = await getLocalAuthorityQueryHandlerAsync({ latitude, longitude });
+    } = await getUKLocalAuthorityQueryHandlerAsync({ latitude, longitude });
     expect(localAuthorityCode).toEqual("W06000002");
     expect(localAuthorityName).toEqual("Gwynedd");
   });
@@ -33,14 +33,14 @@ describe("Get local authority query handler", async () => {
     const {
       localAuthorityCode,
       localAuthorityName,
-    } = await getLocalAuthorityQueryHandlerAsync({ latitude, longitude });
+    } = await getUKLocalAuthorityQueryHandlerAsync({ latitude, longitude });
     expect(localAuthorityCode).toEqual("N09000004");
     expect(localAuthorityName).toEqual("Causeway Coast and Glens");
   });
   it("throws an exception when the location is outside of the United Kingdom", async () => {
     const [latitude, longitude] = [24.0684881, -10.0764504];
     expect(
-      await getLocalAuthorityQueryHandlerAsync({
+      await getUKLocalAuthorityQueryHandlerAsync({
         latitude,
         longitude,
       }).toThrowError(
