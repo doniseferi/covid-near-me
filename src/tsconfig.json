@@ -1,13 +1,6 @@
 {
-  "extends": "../tsconfig.json" // Next v9 force creates this file
-  ,
+  "extends": "../tsconfig.json",
   "compilerOptions": {},
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }
