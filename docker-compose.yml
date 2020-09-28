@@ -11,12 +11,12 @@ services:
     ports:
       - "25432:5432"
 
-  # web:
-  #   image: "covid-near-me:${VERSION:-1}"
-  #   build:
-  #     context: .
-  #     dockerfile: ./src/DOCKERFILE
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - db
+  web:
+    image: "covid-near-me:${VERSION:-1}"
+    build:
+      context: .
+      dockerfile: ./src/DOCKERFILE
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
