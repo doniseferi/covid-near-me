@@ -1,8 +1,39 @@
-import { Client, ClientConfig } from "pg";
+import postgresRepository from "./postgresRepository";
 
-type UKLocalAuthorityResult = {
-  local_authority_name: string;
-  local_authority_code: string;
+const ukLocalAuthorityGeoBoundariesRepository = (
+  connectionString: string
+): UKLocalAuthorityGeoBoundariesRepository => {
+  const repo = postgresRepository(connectionString);
+  const getAsync = async ({
+    latitude,
+    longitude,
+  }: {
+    latitude: number;
+    longitude: number;
+  }): Promise<UKLocalAuthority> => {
+    const result = await repo.executeAync<UKLocalAuthorityResult>({
+      text: `SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)`,
+      values: [`${latitude}`, `${longitude}`],
+    });
+
+    return result?.length === 0
+      ? (() => {
+          throw Error(
+            `latitude: ${latitude} and longitude: ${longitude} is not in` +
+              ` the United Kingdom. Please provide geo coordinates that fall within` +
+              ` the boundaries of the United Kingdom.`
+          );
+        })()
+      : {
+          Name: result[0].local_authority_name,
+          Code: result[0].local_authority_code,
+        };
+  };
+
+  return {
+    getAsync: (query: { latitude: number; longitude: number }) =>
+      getAsync(query),
+  };
 };
 
 export type UKLocalAuthority = {
@@ -10,46 +41,16 @@ export type UKLocalAuthority = {
   Code: string;
 };
 
-export interface UKLocalAuthorityQuery {
-  latitude: number;
-  longitude: number;
-}
-
 export interface UKLocalAuthorityGeoBoundariesRepository {
-  getAsync: (query: UKLocalAuthorityQuery) => Promise<UKLocalAuthority>;
+  getAsync: (query: {
+    latitude: number;
+    longitude: number;
+  }) => Promise<UKLocalAuthority>;
 }
 
-const ukLocalAuthorityGeoBoundariesRepository = (
-  config: string | ClientConfig
-): UKLocalAuthorityGeoBoundariesRepository => {
-  const getAsync = async (
-    query: UKLocalAuthorityQuery
-  ): Promise<UKLocalAuthority> => {
-    const client = new Client(config);
-    await client.connect();
-    const result = await client.query<UKLocalAuthorityResult>(
-      `SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)`,
-      [query.latitude, query.longitude]
-    );
-    await client.end();
-
-    return result.rows[0] !== null && result.rows[0] !== undefined
-      ? {
-          Name: result.rows[0].local_authority_name,
-          Code: result.rows[0].local_authority_code,
-        }
-      : (() => {
-          throw Error(
-            `latitude: ${query.latitude} and longitude: ${query.longitude} is not in` +
-              ` the United Kingdom. Please provide geo coordinates that fall within` +
-              ` the boundaries of the United Kingdom.`
-          );
-        })();
-  };
-
-  return {
-    getAsync: (query: UKLocalAuthorityQuery) => getAsync(query),
-  };
+type UKLocalAuthorityResult = {
+  local_authority_name: string;
+  local_authority_code: string;
 };
 
 export { ukLocalAuthorityGeoBoundariesRepository };

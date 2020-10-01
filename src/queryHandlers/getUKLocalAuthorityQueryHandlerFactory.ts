@@ -1,7 +1,6 @@
 import {
   UKLocalAuthority,
   UKLocalAuthorityGeoBoundariesRepository,
-  UKLocalAuthorityQuery,
 } from "../data/ukLocalAuthorityGeoBoundariesRepository";
 
 /**
@@ -10,7 +9,10 @@ import {
  */
 const getUKLocalAuthorityQueryHandlerAsyncFactory = (
   ukLocalAuthorityRepository: UKLocalAuthorityGeoBoundariesRepository
-): ((query: UKLocalAuthorityQuery) => Promise<UKLocalAuthority>) =>
+): ((query: {
+  latitude: number;
+  longitude: number;
+}) => Promise<UKLocalAuthority>) =>
   ukLocalAuthorityRepository !== null &&
   ukLocalAuthorityRepository !== undefined
     ? ukLocalAuthorityRepository.getAsync
