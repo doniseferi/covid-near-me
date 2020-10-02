@@ -1,5 +1,5 @@
 import { getUKLocalAuthorityQueryHandlerAsyncFactory } from "./getUKLocalAuthorityQueryHandlerFactory";
-import { ukLocalAuthorityGeoBoundariesRepository } from "../data/index";
+import ukLocalAuthorityGeoBoundariesRepository from "../data/index";
 
 const getUKLocalAuthorityQueryHandlerAsync = getUKLocalAuthorityQueryHandlerAsyncFactory(
   ukLocalAuthorityGeoBoundariesRepository

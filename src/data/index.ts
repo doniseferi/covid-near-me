@@ -1,8 +1,12 @@
-import { ukLocalAuthorityGeoBoundariesRepository as Repo } from "./ukLocalAuthorityGeoBoundariesRepository";
+import ukLocalAuthorityGeoBoundariesRepository, {
+  UKLocalAuthority,
+  UKLocalAuthorityGeoBoundariesRepository,
+} from "./ukLocalAuthorityGeoBoundariesRepository";
+import postgresRepository from "./postgresRepository";
 import appConfig from "../config/next.config";
 
-const ukLocalAuthorityGeoBoundariesRepository = Repo(
-  appConfig.ConnectionString
+export default ukLocalAuthorityGeoBoundariesRepository(
+  postgresRepository(appConfig.ConnectionString)
 );
 
-export { ukLocalAuthorityGeoBoundariesRepository };
+export type { UKLocalAuthority, UKLocalAuthorityGeoBoundariesRepository };

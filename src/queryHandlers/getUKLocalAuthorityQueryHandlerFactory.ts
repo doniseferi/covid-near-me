@@ -1,7 +1,7 @@
 import {
-  UKLocalAuthority,
   UKLocalAuthorityGeoBoundariesRepository,
-} from "../data/ukLocalAuthorityGeoBoundariesRepository";
+  UKLocalAuthority,
+} from "../data/index";
 
 /**
  * @template UKLocalAuthorityRepository A repository that given a latitude and longitude returns a UK local authoritys `UKLocalAuthorityRepository`.
@@ -9,10 +9,7 @@ import {
  */
 const getUKLocalAuthorityQueryHandlerAsyncFactory = (
   ukLocalAuthorityRepository: UKLocalAuthorityGeoBoundariesRepository
-): ((query: {
-  latitude: number;
-  longitude: number;
-}) => Promise<UKLocalAuthority>) =>
+): ((latitude: number, longitude: number) => Promise<UKLocalAuthority>) =>
   ukLocalAuthorityRepository !== null &&
   ukLocalAuthorityRepository !== undefined
     ? ukLocalAuthorityRepository.getAsync
