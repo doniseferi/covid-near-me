@@ -23,6 +23,11 @@ export default (
           : throwCoordinatesNotFoundError(latitude, longitude)
       );
 
+  return {
+    getAsync: async (latitude: number, longitude: number) =>
+      await getAsync(latitude, longitude),
+  };
+
   const validate = (entity: UKLocalAuthorityResult[]) =>
     entity && entity.length === 1;
 
@@ -40,11 +45,6 @@ export default (
           ` the boundaries of the United Kingdom.`
       );
     })();
-
-  return {
-    getAsync: async (latitude: number, longitude: number) =>
-      await getAsync(latitude, longitude),
-  };
 };
 
 export type UKLocalAuthority = {
