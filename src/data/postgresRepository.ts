@@ -6,11 +6,12 @@ export default (config: string | ClientConfig) => {
     values: string[];
   }): Promise<T[]> => {
     const client = new Client(config);
-    await client.connect();
     return await client
-      .query<T>(command)
-      .then((result) => result.rows)
-      .finally(async () => await client.end());
+      .connect()
+      .then(
+        async () => await client.query<T>(command).then((result) => result.rows)
+      )
+      .finally(async () => client.end());
   };
 
   return {

@@ -15,7 +15,6 @@ const ukLocalAuthorityGeoBoundariesRepository = (
       text: `SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)`,
       values: [`${latitude}`, `${longitude}`],
     });
-
     return result?.length === 0
       ? (() => {
           throw Error(
@@ -31,8 +30,8 @@ const ukLocalAuthorityGeoBoundariesRepository = (
   };
 
   return {
-    getAsync: (query: { latitude: number; longitude: number }) =>
-      getAsync(query),
+    getAsync: async (query: { latitude: number; longitude: number }) =>
+      await getAsync(query),
   };
 };
 

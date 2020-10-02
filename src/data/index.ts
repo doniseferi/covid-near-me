@@ -1,7 +1,8 @@
 import { ukLocalAuthorityGeoBoundariesRepository as Repo } from "./ukLocalAuthorityGeoBoundariesRepository";
+import appConfig from "../config/next.config";
 
 const ukLocalAuthorityGeoBoundariesRepository = Repo(
-  "postgresql://postgres:password@localhost:25432/postgres?timeout=10"
+  appConfig.ConnectionString
 );
 
 export { ukLocalAuthorityGeoBoundariesRepository };
