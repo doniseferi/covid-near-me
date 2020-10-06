@@ -1,8 +1,5 @@
 interface Repository {
-  executeAsync: <T>(command: {
-    text: string;
-    values: string[];
-  }) => Promise<T[]>;
+  queryAsync: <T>(command: { text: string; values: string[] }) => Promise<T[]>;
 }
 
 export default (
@@ -13,7 +10,7 @@ export default (
     longitude: number
   ): Promise<UKLocalAuthority> =>
     await repository
-      .executeAsync<UKLocalAuthorityResult>({
+      .queryAsync<UKLocalAuthorityResult>({
         text: `SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)`,
         values: [`${latitude}`, `${longitude}`],
       })

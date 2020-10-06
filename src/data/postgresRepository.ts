@@ -1,7 +1,7 @@
 import { Client, ClientConfig } from "pg";
 
 export default (config: string | ClientConfig) => {
-  const executeAsync = async <T>(command: {
+  const queryAsync = async <T>(command: {
     text: string;
     values: string[];
   }): Promise<T[]> => {
@@ -18,9 +18,9 @@ export default (config: string | ClientConfig) => {
   };
 
   return {
-    executeAsync: async <T>(command: {
+    queryAsync: async <T>(command: {
       text: string;
       values: string[];
-    }): Promise<T[]> => await executeAsync(command),
+    }): Promise<T[]> => await queryAsync(command),
   };
 };
