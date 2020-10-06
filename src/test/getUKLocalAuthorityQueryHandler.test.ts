@@ -42,7 +42,7 @@ describe("Get local authority query handler", () => {
     expect(
       async () =>
         await getUKLocalAuthorityQueryHandlerAsync(latitude, longitude)
-    ).rejects.toEqual(
+    ).rejects.toThrow(
       new Error(
         `latitude: ${latitude} and longitude: ${longitude} is not in` +
           ` the United Kingdom. Please provide geo coordinates that fall within` +

@@ -4,6 +4,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>[/\\\\](node_modules|.next)[/\\\\]'],
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$'],
   testEnvironment: 'node',
+  setupFiles: ["<rootDir>/jest.env-setup.js"],
   transform: {
     '^.+\\.(ts|tsx)$': 'babel-jest',
   },
