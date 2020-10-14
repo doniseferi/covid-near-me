@@ -1,32 +1,37 @@
+import { GeoCoordinates } from "../valueTypes/geoCoordinates";
+import { Location, LocalAuthorityRepository } from "../domain/localAuthority";
+
 interface Repository {
   queryAsync: <T>(command: { text: string; values: string[] }) => Promise<T[]>;
 }
 
-export default (
-  repository: Repository
-): UKLocalAuthorityGeoBoundariesRepository => {
-  const getAsync = async (
-    latitude: number,
-    longitude: number
-  ): Promise<UKLocalAuthority> =>
+export default (repository: Repository): LocalAuthorityRepository => {
+  const getAsync = async ({
+    latitude,
+    longitude,
+  }: GeoCoordinates): Promise<Location> =>
     await repository
-      .queryAsync<UKLocalAuthorityResult>({
+      .queryAsync<LocalAuthorityResult>({
         text: `SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)`,
         values: [`${latitude}`, `${longitude}`],
       })
       .then((entity) =>
         validate(entity)
-          ? map(entity)
+          ? map(entity, { latitude, longitude })
           : throwCoordinatesNotFoundError(latitude, longitude)
       );
 
-  const validate = (entity: UKLocalAuthorityResult[]) =>
+  const validate = (entity: LocalAuthorityResult[]) =>
     entity && entity.length === 1;
 
-  const map = (entity: UKLocalAuthorityResult[]): UKLocalAuthority =>
+  const map = (
+    entity: LocalAuthorityResult[],
+    geoCoordinates: GeoCoordinates
+  ): Location =>
     entity.map((e) => ({
-      Name: e.local_authority_name,
-      Code: e.local_authority_code,
+      name: e.local_authority_name,
+      code: e.local_authority_code,
+      geoCoordinates: geoCoordinates,
     }))[0];
 
   const throwCoordinatesNotFoundError = (latitude: number, longitude: number) =>
@@ -39,20 +44,12 @@ export default (
     })();
 
   return {
-    getAsync: async (latitude: number, longitude: number) =>
-      await getAsync(latitude, longitude),
+    getAsync: async (geoCoordinates: GeoCoordinates) =>
+      await getAsync(geoCoordinates),
   };
 };
 
-export type UKLocalAuthority = {
-  Name: string;
-  Code: string;
-};
-export interface UKLocalAuthorityGeoBoundariesRepository {
-  getAsync: (latitude: number, longitude: number) => Promise<UKLocalAuthority>;
-}
-
-type UKLocalAuthorityResult = {
+type LocalAuthorityResult = {
   local_authority_name: string;
   local_authority_code: string;
 };
