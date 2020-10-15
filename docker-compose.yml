@@ -6,13 +6,13 @@ services:
     build:
       context: .
       dockerfile: ./db/DOCKERFILE
-    environment:
-      POSTGRES_PASSWORD: password
+    env_file: ./src/.env.local
     ports:
       - "25432:5432"
 
   web:
     image: "covid-near-me:${VERSION:-1}"
+    env_file: ./src/.env.local
     build:
       context: .
       dockerfile: ./src/DOCKERFILE
