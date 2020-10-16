@@ -1,5 +1,5 @@
 import axios from "axios";
-export default async () => {
+export default () => {
   const getAsync = async (localAuthority: string, iso8601Date: string) =>
     await axios
       .get(
