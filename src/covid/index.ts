@@ -1,10 +1,10 @@
 import axios from "axios";
+import config from "../config/next.config";
+
 export default () => {
-  const getAsync = async (localAuthority: string, iso8601Date: string) =>
+  const getAsync = async (localAuthority: string, date: Date) =>
     await axios
-      .get(
-        `https://api.coronavirus.data.gov.uk/v1/data?filters={date=${iso8601Date};areaType=utla;areaName=${localAuthority}&structure={"areaName":"areaName","areaCode":"areaCode","date":"date","hash":"hash","newCasesByPublishDate":"newCasesByPublishDate","cumCasesByPublishDate":"cumCasesByPublishDate","newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate","cumDeaths28DaysByPublishDate":"cumDeaths28DaysByPublishDate"}`
-      )
+      .get(config.covidApiUrl(localAuthority, date))
       .then(async (res) => {
         const body = await res.data.data[0];
         const result = {
@@ -22,7 +22,7 @@ export default () => {
       });
 
   return {
-    getAsync: async (localAuthority: string, iso8601Date: string) =>
-      getAsync(localAuthority, iso8601Date),
+    getAsync: async (localAuthority: string, date: Date) =>
+      await getAsync(localAuthority, date),
   };
 };

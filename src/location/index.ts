@@ -4,7 +4,7 @@ import localAuthorityRepository from "./repository/localAuthorityRepository";
 import { Location, LocalAuthorityRepository } from "./domain/localAuthority";
 
 const locationRepository = localAuthorityRepository(
-  postgresRepository(config.ConnectionString)
+  postgresRepository(config.connectionString)
 );
 
 export type { Location, LocalAuthorityRepository };

@@ -15,7 +15,10 @@ test.concurrent.each`
     cumDeaths28DaysByPublishDate,
   }) => {
     const repo = covidRepository();
-    const result = await repo.getAsync(`${localAuthority}`, "2020-10-14");
+    const result = await repo.getAsync(
+      `${localAuthority}`,
+      new Date(Date.UTC(2020, 9, 14))
+    );
     expect(result.date).toEqual("2020-10-14");
     expect(result.newCasesByPublishDate).toEqual(newCasesByPublishDate);
     expect(result.cumCasesByPublishDate).toEqual(cumCasesByPublishDate);
