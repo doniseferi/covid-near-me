@@ -2,13 +2,13 @@ import { CovidReport } from "../domain/covidReport";
 import { Location } from "../../location/index";
 import { CovidReportRepository } from "../domain/covidReport";
 
-export type HttpClient = {
+export type CovidHttpClient = {
   getAsync: (url: string) => Promise<CovidReport>;
 };
 
 export default (
   covidReportBaseUrl: string,
-  httpClient: HttpClient
+  httpClient: CovidHttpClient
 ): CovidReportRepository => {
   if (!httpClient) {
     throw new ReferenceError(

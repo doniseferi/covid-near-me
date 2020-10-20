@@ -1,8 +1,8 @@
 import axios from "axios";
 import { CovidReport } from "../index";
-import { HttpClient } from "../repository/covidReportRepository";
+import { CovidHttpClient } from "../repository/covidReportRepository";
 
-export default (): HttpClient => {
+export default (): CovidHttpClient => {
   const getAsync = async (url: string): Promise<CovidReport> => {
     const { data } = await axios.get<CovidResponse>(url);
     const result = (data.data[0] as unknown) as CovidReport;
