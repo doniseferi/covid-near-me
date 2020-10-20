@@ -1,5 +1,5 @@
 import { Location } from "../../location/index";
-import { CovidReportRepository } from "../domain/covidReport";
+import { CovidReport, CovidReportRepository } from "../domain/covidReport";
 
 export type HttpClient = {
   getAsync: <T>(url: string) => Promise<T>;
@@ -14,12 +14,12 @@ export default (
       "Dependency not satisfied. ReportRepository has a dependency on HttpClient."
     );
   }
-  const getAsync = async (location: Location, date: Date) => {
-    const result = await httpClient.getAsync<CovidResponse>(
-      getUrl(location, date)
-    );
-    return result.data[0];
-  };
+  const getAsync = async (
+    location: Location,
+    date: Date
+  ): Promise<CovidReport> =>
+    (await httpClient.getAsync<{ data: CovidReport[] }>(getUrl(location, date)))
+      .data[0];
 
   const getUrl = (location: Location, date: Date): string =>
     !location
@@ -41,22 +41,3 @@ export default (
       await getAsync(location, date),
   };
 };
-
-interface CovidData {
-  date: string;
-  name: string;
-  code: string;
-  newCasesPublished: number;
-  newCasesBySpecimen: number;
-  newDeathsPublished: number;
-  rateOfCumulativeCasesBySpecimenDate: number;
-  cumulativeCasesBySpecimen: number;
-  rateOfCumulativeDeathsBySpecimen: number;
-  cumulativeDeathsBySpecimen: number;
-  newDeaths28DaysByPublishDate: number;
-  cumulativeDeaths28DaysByPublishDate: number;
-  cumulativeDeaths28DaysByPublishDateRate: number;
-}
-interface CovidResponse {
-  data: CovidData[];
-}
