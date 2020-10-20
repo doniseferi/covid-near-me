@@ -6,6 +6,12 @@ interface Repository {
 }
 
 export default (repository: Repository): LocalAuthorityRepository => {
+  if (!repository) {
+    throw new ReferenceError(
+      "Dependency not satisfied. LocalAuthorityRepository has a dependency on Repository."
+    );
+  }
+
   const getAsync = async ({
     latitude,
     longitude,

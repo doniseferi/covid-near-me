@@ -5,6 +5,12 @@ export default (config: string | ClientConfig) => {
     text: string;
     values: string[];
   }): Promise<T[]> => {
+    if (!config) {
+      throw new ReferenceError(
+        "Dependency not satisfied. PostgresRepository has a dependency on a connection string or ClientConfig."
+      );
+    }
+
     const client = new Client(config);
     return await client
       .connect()
