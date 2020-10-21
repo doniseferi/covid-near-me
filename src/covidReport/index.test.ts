@@ -2,9 +2,9 @@ import { covidReportRepository } from "./index";
 
 test.concurrent.each`
 localAuthorityCode | newCasesPublished | newCasesBySpecimen | newDeathsPublished | rateOfCumulativeCasesBySpecimenDate | cumulativeCasesBySpecimen | rateOfCumulativeDeathsBySpecimen | cumulativeDeathsBySpecimen | newDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDateRate
-${"N09000004"} | ${79} | ${62} | ${0} | ${793.3} | ${1149} | ${793.3} | ${1149} | ${0} | ${null} | ${null}
-${"E09000033"} | ${44} | ${43} | ${0} | ${664.7} | ${1737} | ${664.7} | ${1737} | ${0} | ${134} | ${51.3}
-${"W06000002"} | ${16} | ${11} | ${0} | ${777.1} | ${968} | ${777.1} | ${968} | ${0} | ${null} | ${null}
+${"N09000004"} | ${79} | ${61} | ${0} | ${792.6} | ${1148} | ${792.6} | ${1148} | ${0} | ${null} | ${null}
+${"E09000033"} | ${44} | ${42} | ${0} | ${664.3} | ${1736} | ${664.3} | ${1736} | ${0} | ${134} | ${51.3}
+${"W06000002"} | ${16} | ${11} | ${0} | ${778.7} | ${970} | ${778.7} | ${970} | ${0} | ${null} | ${null}
 ${"S12000034"} | ${8}  | ${11} | ${0} | ${313.2} | ${818} | ${313.2} | ${818} | ${0} | ${59} | ${22.6}
 `(
   "location repository returns $expectedName for $latitude $longitude",
