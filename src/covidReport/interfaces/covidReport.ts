@@ -1,6 +1,6 @@
-import { Location } from "../../location/domain/localAuthority";
+import { Location } from "../../location/interfaces/localAuthority";
 
-export type CovidReport = {
+export interface CovidReport {
   newCasesPublished: string;
   newCasesBySpecimen: string;
   newDeathsPublished: string;
@@ -11,7 +11,7 @@ export type CovidReport = {
   newDeaths28DaysByPublishDate: string;
   cumulativeDeaths28DaysByPublishDate: string;
   cumulativeDeaths28DaysByPublishDateRate: number;
-};
+}
 
 export interface CovidReportRepository {
   getAsync: (location: Location, date: Date) => Promise<CovidReport>;

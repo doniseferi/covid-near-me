@@ -1,5 +1,5 @@
 import config from "../config/next.config";
-import { CovidReport, CovidReportRepository } from "./domain/covidReport";
+import { CovidReport, CovidReportRepository } from "./interfaces/covidReport";
 import covidHttpClient from "./infastructure/covidHttpClient";
 import covidReportRepository from "./repository/covidReportRepository";
 

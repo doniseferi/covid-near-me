@@ -1,7 +1,7 @@
-export type GeoCoordinates = {
+export interface GeoCoordinates {
   latitude: number;
   longitude: number;
-};
+}
 
 export default (latitude: number, longitude: number): GeoCoordinates =>
   latitude < minimumLatitude || latitude > maximumLatitude

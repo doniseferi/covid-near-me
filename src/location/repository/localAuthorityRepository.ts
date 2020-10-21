@@ -1,5 +1,8 @@
 import { GeoCoordinates } from "../valueTypes/geoCoordinates";
-import { Location, LocalAuthorityRepository } from "../domain/localAuthority";
+import {
+  Location,
+  LocalAuthorityRepository,
+} from "../interfaces/localAuthority";
 
 interface Repository {
   queryAsync: <T>(command: { text: string; values: string[] }) => Promise<T[]>;
@@ -55,7 +58,7 @@ export default (repository: Repository): LocalAuthorityRepository => {
   };
 };
 
-type LocalAuthorityResult = {
+interface LocalAuthorityResult {
   local_authority_name: string;
   local_authority_code: string;
-};
+}

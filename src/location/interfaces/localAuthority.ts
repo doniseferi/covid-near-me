@@ -1,13 +1,13 @@
 import { GeoCoordinates } from "../valueTypes/geoCoordinates";
 
-type LocalAuthority = {
+interface LocalAuthority {
   name: string;
   code: string;
-};
+}
 
-export type Location = {
+export interface Location extends LocalAuthority {
   geoCoordinates: GeoCoordinates;
-} & LocalAuthority;
+}
 
 export interface LocalAuthorityRepository {
   getAsync: (geoCoordinates: GeoCoordinates) => Promise<Location>;
