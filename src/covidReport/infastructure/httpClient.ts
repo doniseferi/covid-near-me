@@ -10,7 +10,6 @@ export default (): HttpClient => {
     }
 
     const { data } = await axios.get<T>(url);
-
     return data;
   };
 
