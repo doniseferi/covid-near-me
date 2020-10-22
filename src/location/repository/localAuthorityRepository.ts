@@ -18,17 +18,15 @@ export default (repository: Repository): LocalAuthorityRepository => {
   const getAsync = async ({
     latitude,
     longitude,
-  }: GeoCoordinates): Promise<Location> =>
-    await repository
-      .queryAsync<LocalAuthorityResult>({
-        text: `SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)`,
-        values: [`${latitude}`, `${longitude}`],
-      })
-      .then((entity) =>
-        validate(entity)
-          ? map(entity, { latitude, longitude })
-          : throwCoordinatesNotFoundError(latitude, longitude)
-      );
+  }: GeoCoordinates): Promise<Location> => {
+    const result = await repository.queryAsync<LocalAuthorityResult>({
+      text: `SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)`,
+      values: [`${latitude}`, `${longitude}`],
+    });
+    return validate(result)
+      ? map(result, { latitude, longitude })
+      : throwCoordinatesNotFoundError(latitude, longitude);
+  };
 
   const validate = (entity: LocalAuthorityResult[]) =>
     entity && entity.length === 1;

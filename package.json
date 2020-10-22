@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "docker-compose up -d && jest",
+    "test": "docker-compose up -d && jest --runInBand --detectOpenHandles",
     "dev": "next src",
     "build": "next build src",
     "start": "next start src",

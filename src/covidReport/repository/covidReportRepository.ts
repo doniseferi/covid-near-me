@@ -17,9 +17,15 @@ export default (
   const getAsync = async (
     location: Location,
     date: Date
-  ): Promise<CovidReport> =>
-    (await httpClient.getAsync<{ data: CovidReport[] }>(getUrl(location, date)))
-      .data[0];
+  ): Promise<CovidReport> => {
+    const url = getUrl(location, date);
+    try {
+      const result = await httpClient.getAsync<{ data: CovidReport[] }>(url);
+      return result.data[0];
+    } catch (err) {
+      throw err;
+    }
+  };
 
   const getUrl = (location: Location, date: Date): string =>
     !location
