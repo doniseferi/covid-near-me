@@ -1,5 +1,5 @@
 import { Location } from "../../location/index";
-import { CovidReport, CovidReportRepository } from "../interfaces/covidReport";
+import { CovidReport, CovidReportRepository } from "../interfaces/covid";
 
 export interface HttpClient {
   getAsync: <T>(url: string) => Promise<T>;
