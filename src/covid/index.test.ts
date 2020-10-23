@@ -1,4 +1,4 @@
-import { covidReportRepository } from "./index";
+import { covidRepository } from "./index";
 
 test.concurrent.each`
 localAuthorityCode | newCasesPublished | newCasesBySpecimen | newDeathsPublished | rateOfCumulativeCasesBySpecimenDate | cumulativeCasesBySpecimen | rateOfCumulativeDeathsBySpecimen | cumulativeDeathsBySpecimen | newDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDateRate
@@ -21,7 +21,7 @@ ${"S12000034"} | ${8}  | ${11} | ${0} | ${313.5} | ${819} | ${313.5} | ${819} | 
     cumulativeDeaths28DaysByPublishDate,
     cumulativeDeaths28DaysByPublishDateRate,
   }) => {
-    const result = await covidReportRepository.getAsync(
+    const result = await covidRepository.getAsync(
       {
         code: localAuthorityCode,
         name: "abc",

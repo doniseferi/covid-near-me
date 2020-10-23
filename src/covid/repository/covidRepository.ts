@@ -6,7 +6,7 @@ export interface HttpClient {
 }
 
 export default (
-  covidReportBaseUrl: string,
+  covidBaseUrl: string,
   httpClient: HttpClient
 ): CovidReportRepository => {
   if (!httpClient) {
@@ -36,7 +36,7 @@ export default (
       ? (() => {
           throw new Error("Please provide a date.");
         })()
-      : `${covidReportBaseUrl}/v1/data?filters={date=${date
+      : `${covidBaseUrl}/v1/data?filters={date=${date
           .toISOString()
           .substring(0, 10)};areaType=ltla;areaCode=${
           location.code

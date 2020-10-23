@@ -1,9 +1,7 @@
 import config from "../config/next.config";
 import { CovidReport, CovidReportRepository } from "./interfaces/covid";
 import httpClient from "./infastructure/httpClient";
-import covidReportRepository, {
-  HttpClient,
-} from "./repository/covidRepository";
+import covidRepository, { HttpClient } from "./repository/covidRepository";
 import resilientPolicies from "../resiliency/index";
 
 const resilientHttpClient: HttpClient = {
@@ -11,10 +9,10 @@ const resilientHttpClient: HttpClient = {
     await resilientPolicies.execute(async () => await httpClient(url)),
 };
 
-const reportRepository: CovidReportRepository = covidReportRepository(
+const reportRepository: CovidReportRepository = covidRepository(
   config.covidApiBaseUrl,
   resilientHttpClient
 );
 
 export type { CovidReport, CovidReportRepository };
-export { reportRepository as covidReportRepository };
+export { reportRepository as covidRepository };
