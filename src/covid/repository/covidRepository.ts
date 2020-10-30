@@ -1,46 +1,28 @@
 import { Location } from "../../location/index";
-import { CovidReport, CovidReportRepository } from "../interfaces/covid";
+import { Covid, CovidRepository } from "../interfaces/covid";
+
+export interface GetCovidApiUrl {
+  getUrl: (location: Location, date: Date) => string;
+}
 
 export interface HttpClient {
   getAsync: <T>(url: string) => Promise<T>;
 }
 
 export default (
-  covidBaseUrl: string,
+  covidUrlQueryHandler: GetCovidApiUrl,
   httpClient: HttpClient
-): CovidReportRepository => {
+): CovidRepository => {
   if (!httpClient) {
     throw new ReferenceError(
       "Dependency not satisfied. ReportRepository has a dependency on HttpClient."
     );
   }
-  const getAsync = async (
-    location: Location,
-    date: Date
-  ): Promise<CovidReport> => {
-    const url = getUrl(location, date);
-    try {
-      const result = await httpClient.getAsync<{ data: CovidReport[] }>(url);
-      return result.data[0];
-    } catch (err) {
-      throw err;
-    }
+  const getAsync = async (location: Location, date: Date): Promise<Covid> => {
+    const url = covidUrlQueryHandler.getUrl(location, date);
+    const result = await httpClient.getAsync<{ data: Covid[] }>(url);
+    return result.data[0];
   };
-
-  const getUrl = (location: Location, date: Date): string =>
-    !location
-      ? (() => {
-          throw new ReferenceError("Please provide a value for Location.");
-        })()
-      : !date
-      ? (() => {
-          throw new Error("Please provide a date.");
-        })()
-      : `${covidBaseUrl}/v1/data?filters={date=${date
-          .toISOString()
-          .substring(0, 10)};areaType=ltla;areaCode=${
-          location.code
-        }&structure={"date": "date","name": "areaName","code": "areaCode","newCasesPublished":"newCasesByPublishDate","newCasesBySpecimen":"newCasesBySpecimenDate","newDeathsPublished":"newDeathsByPublishDate","rateOfCumulativeCasesBySpecimenDate":"cumCasesBySpecimenDateRate","cumulativeCasesBySpecimen":"cumCasesBySpecimenDate","rateOfCumulativeDeathsBySpecimen":"cumCasesBySpecimenDateRate","cumulativeDeathsBySpecimen":"cumCasesBySpecimenDate","newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate","cumulativeDeaths28DaysByPublishDate":"cumDeaths28DaysByPublishDate","cumulativeDeaths28DaysByPublishDateRate":"cumDeaths28DaysByPublishDateRate"}`;
 
   return {
     getAsync: async (location: Location, date: Date) =>

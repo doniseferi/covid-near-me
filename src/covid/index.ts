@@ -1,18 +1,41 @@
-import config from "../config/next.config";
-import { CovidReport, CovidReportRepository } from "./interfaces/covid";
+import { Covid, CovidRepository } from "./interfaces/covid";
 import httpClient from "./infastructure/httpClient";
-import covidRepository, { HttpClient } from "./repository/covidRepository";
-import resilientPolicies from "../resiliency/index";
+import repository from "./repository/covidRepository";
+import resilienceDecorator from "../resiliency/index";
+import {
+  getNationalCovidApiUrl,
+  getCovidDataByLocalAuthorityUrl,
+} from "./url/index";
+import { Location } from "../location";
 
-const resilientHttpClient: HttpClient = {
-  getAsync: async (url: string) =>
-    await resilientPolicies.execute(async () => await httpClient(url)),
+const resiliencyConfig = {
+  timeoutInMilliseconds: 1000,
+  backOffPeriodInMilliseconds: 3000,
+  errorThresholdPercentage: 50,
 };
 
-const reportRepository: CovidReportRepository = covidRepository(
-  config.covidApiBaseUrl,
-  resilientHttpClient
+const repo = repository(
+  {
+    getUrl: (location: Location, date: Date) =>
+      getCovidDataByLocalAuthorityUrl(location, date),
+  },
+  httpClient
 );
+const fallback = repository(
+  {
+    getUrl: (location: Location, date: Date) =>
+      getNationalCovidApiUrl(location, date),
+  },
+  httpClient
+);
+const covidRepository: CovidRepository = {
+  getAsync: async (location: Location, date: Date) =>
+    await resilienceDecorator(
+      resiliencyConfig,
+      (location: Location, date: Date) => repo.getAsync(location, date),
+      (location: Location, date: Date) => fallback.getAsync(location, date)
+    ).executeResiliently(location, date),
+};
 
-export type { CovidReport, CovidReportRepository };
-export { reportRepository as covidRepository };
+export type { Covid, CovidRepository };
+export { covidRepository };

@@ -29,7 +29,7 @@ export default (repository: Repository): LocalAuthorityRepository => {
   };
 
   const validate = (entity: LocalAuthorityResult[]) =>
-    entity && entity.length === 1;
+    entity && entity?.length === 1;
 
   const map = (
     entity: LocalAuthorityResult[],

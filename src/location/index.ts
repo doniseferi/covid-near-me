@@ -5,7 +5,6 @@ import {
   Location,
   LocalAuthorityRepository,
 } from "./interfaces/localAuthority";
-import resilientPolicies from "../resiliency/index";
 import { GeoCoordinates } from "./valueTypes/geoCoordinates";
 
 const defaultLocationRepository: LocalAuthorityRepository = localAuthorityRepository(
@@ -14,9 +13,7 @@ const defaultLocationRepository: LocalAuthorityRepository = localAuthorityReposi
 
 const resilientLocationRepository: LocalAuthorityRepository = {
   getAsync: async (geoCoordinates: GeoCoordinates) =>
-    await resilientPolicies.execute(
-      async () => await defaultLocationRepository.getAsync(geoCoordinates)
-    ),
+    await defaultLocationRepository.getAsync(geoCoordinates),
 };
 
 export type { Location, LocalAuthorityRepository };
