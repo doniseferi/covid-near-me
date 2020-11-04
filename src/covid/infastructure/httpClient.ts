@@ -1,7 +1,12 @@
 import { HttpClient } from "../repository/covidRepository";
 
+export type HttpResponseMessage<T> = {
+  status: number;
+  data: T;
+};
+
 const httpClient = (
-  getAsync: <T>(url: string) => Promise<{ status: number; data: T }>
+  getAsync: <T>(url: string) => Promise<HttpResponseMessage<T>>
 ): HttpClient => {
   const get = async <T>(url: string): Promise<T> => {
     if (!url) {

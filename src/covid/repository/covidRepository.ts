@@ -1,4 +1,4 @@
-import { Location } from "../../location/index";
+import { Location } from "../../location/interfaces/localAuthority";
 import { Covid, CovidRepository } from "../interfaces/covid";
 
 export interface GetCovidApiUrl {

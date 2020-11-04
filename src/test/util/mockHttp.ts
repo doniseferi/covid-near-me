@@ -18,7 +18,9 @@ const mockHttp = (config: MockHttpConfig): Polly => {
     logging: false,
     recordFailedRequests: true,
     recordIfMissing: true,
-    timing: Timing.fixed(config.delayInMilliseconds ?? 0),
+    timing: Timing.fixed(
+      config.delayInMilliseconds ? config.delayInMilliseconds : 0
+    ),
   });
 };
 

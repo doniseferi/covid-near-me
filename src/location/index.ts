@@ -1,10 +1,7 @@
 import config from "../config/next.config";
 import postgresRepository from "./infastructure/postgresRepository";
 import localAuthorityRepository from "./repository/localAuthorityRepository";
-import {
-  Location,
-  LocalAuthorityRepository,
-} from "./interfaces/localAuthority";
+import { LocalAuthorityRepository } from "./interfaces/localAuthority";
 import { GeoCoordinates } from "./valueTypes/geoCoordinates";
 
 const defaultLocationRepository: LocalAuthorityRepository = localAuthorityRepository(
@@ -16,5 +13,4 @@ const resilientLocationRepository: LocalAuthorityRepository = {
     await defaultLocationRepository.getAsync(geoCoordinates),
 };
 
-export type { Location, LocalAuthorityRepository };
 export { resilientLocationRepository as locationRepository };

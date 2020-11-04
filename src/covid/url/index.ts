@@ -1,4 +1,4 @@
-import { Location } from "../../location/index";
+import { Location } from "../../location/interfaces/localAuthority";
 import match from "../../match";
 import { England, Scotland, Wales, NorthernIreland } from "../constants/index";
 import config from "../../config/next.config";
