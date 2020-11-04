@@ -9,7 +9,7 @@
     "dev": "next src",
     "build": "next build src",
     "start": "next start src",
-    "type-check": "tsc src"
+    "type-check": "tsc"
   },
   "repository": {
     "type": "git",
