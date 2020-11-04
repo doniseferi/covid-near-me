@@ -1,18 +1,12 @@
-import config from "../config/next.config";
-import { CovidReport, CovidReportRepository } from "./interfaces/covid";
-import httpClient from "./infastructure/httpClient";
-import covidRepository, { HttpClient } from "./repository/covidRepository";
-import resilientPolicies from "../resiliency/index";
+import { CovidRepository } from "./interfaces/covid";
+import builder from "./builder/builder";
 
-const resilientHttpClient: HttpClient = {
-  getAsync: async (url: string) =>
-    await resilientPolicies.execute(async () => await httpClient(url)),
+const resiliencyConfig = {
+  timeoutInMilliseconds: 6000,
+  backOffPeriodInMilliseconds: 1000,
+  errorThresholdPercentage: 50,
 };
 
-const reportRepository: CovidReportRepository = covidRepository(
-  config.covidApiBaseUrl,
-  resilientHttpClient
-);
+const covidRepository: CovidRepository = builder(resiliencyConfig).build();
 
-export type { CovidReport, CovidReportRepository };
-export { reportRepository as covidRepository };
+export { covidRepository, builder };
