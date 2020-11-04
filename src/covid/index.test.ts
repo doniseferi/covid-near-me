@@ -1,5 +1,5 @@
 import { covidRepository } from "./index";
-import polly from "../test/util/httpMock";
+import polly from "../test/util/mockHttp";
 import { Polly } from "@pollyjs/core";
 
 describe("Covid Repository", () => {

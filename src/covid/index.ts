@@ -1,5 +1,5 @@
 import { Covid, CovidRepository } from "./interfaces/covid";
-import httpClient from "./infastructure/httpClient";
+import httpClient from "./infastructure/index";
 import repository from "./repository/covidRepository";
 import resilienceDecorator from "../resiliency/index";
 import {
@@ -9,8 +9,8 @@ import {
 import { Location } from "../location";
 
 const resiliencyConfig = {
-  timeoutInMilliseconds: 1000,
-  backOffPeriodInMilliseconds: 3000,
+  timeoutInMilliseconds: 6000,
+  backOffPeriodInMilliseconds: 1000,
   errorThresholdPercentage: 50,
 };
 
