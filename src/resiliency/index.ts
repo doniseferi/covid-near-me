@@ -6,30 +6,41 @@ export interface ResiliencyConfig {
   errorThresholdPercentage: number;
 }
 
-export default <T extends unknown[] = unknown[], R = unknown>(
-  resiliencyConfig: ResiliencyConfig,
-  target: (...args: T) => Promise<R>,
-  fallback: (...args: T) => Promise<R>
-) => {
-  if (!target) {
-    throw new ReferenceError(
-      `Please provide a method you wish to execute resiliently.`
-    );
-  }
-  if (!fallback) {
-    throw new ReferenceError(
-      `Please provide a method you wish to execute as a failback when the circuit is open.`
-    );
-  }
+export default (resiliencyConfig: ResiliencyConfig) => {
+  const builder = <T extends unknown[] = unknown[], R = unknown[]>(
+    target: (...args: T) => Promise<R>
+  ) => {
+    if (!target) {
+      throw new ReferenceError(
+        `Please provide a fallback method you wish to execute resiliently.`
+      );
+    }
 
-  const circuitBreaker = new CircuitBreaker(target, {
-    timeout: resiliencyConfig.timeoutInMilliseconds,
-    resetTimeout: resiliencyConfig.backOffPeriodInMilliseconds,
-    errorThresholdPercentage: resiliencyConfig.backOffPeriodInMilliseconds,
-  }).fallback(fallback);
+    const circuitBreaker = new CircuitBreaker(target, {
+      timeout: resiliencyConfig.timeoutInMilliseconds,
+      resetTimeout: resiliencyConfig.backOffPeriodInMilliseconds,
+      errorThresholdPercentage: resiliencyConfig.backOffPeriodInMilliseconds,
+    });
+
+    const withFallback = (fallback: (...args: T) => Promise<R>) => {
+      if (!fallback) {
+        throw ReferenceError("Fallback handler is null or undefined.");
+      }
+      return {
+        executeResiliently: async (...args: T) =>
+          await circuitBreaker.fallback(fallback).fire(...args),
+      };
+    };
+
+    return {
+      withFallBack: (fallback: (...args: T) => Promise<R>) =>
+        withFallback(fallback),
+      executeResiliently: async (...args: T) =>
+        await circuitBreaker.fire(...args),
+    };
+  };
 
   return {
-    executeResiliently: async (...args: T): Promise<R> =>
-      await circuitBreaker.fire(...args),
+    build: builder,
   };
 };
