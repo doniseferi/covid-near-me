@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "docker-compose up -d && jest --runInBand --detectOpenHandles --coverage=true --coverageProvider=babel",
+    "test": "npm run compose && npm run jestest",
     "coverage": "jest --coverage --coverageReporters=text",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "dev": "next src",
     "build": "next build src",
     "start": "next start src",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "build:docker": "docker build --tag doniseferi/serverlesssalah:latest .",
+    "compose": "npm run build && docker-compose build && docker-compose up -d --remove-orphans",
+    "prestart": "npm run build",
+    "jestest": "jest --runInBand --detectOpenHandles --coverage=true --coverageProvider=babel"
   },
   "repository": {
     "type": "git",

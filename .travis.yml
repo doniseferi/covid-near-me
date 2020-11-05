@@ -17,4 +17,7 @@ deploy:
   access: public
   cleanup: false
   on:
-    branch: master
+    branches:
+      only:
+      - gh-pages
+      - /.*/
