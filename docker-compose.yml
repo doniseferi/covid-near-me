@@ -1,6 +1,6 @@
 services:
   db:
-    image: "uk-geoboundaries:${VERSION:-1}"
+    image: "uk-geoboundaries:1"
     build:
       context: .
       dockerfile: ./db/DOCKERFILE
@@ -9,7 +9,7 @@ services:
       - "25432:5432"
 
   web:
-    image: "covid-near-me:${VERSION:-1}"
+    image: "covid-near-me:1"
     env_file: ./src/.env.local
     build:
       context: .
