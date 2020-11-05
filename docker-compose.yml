@@ -1,6 +1,6 @@
 services:
   db:
-    image: "uk-geoboundaries:${VERSION:-1}"
+    image: "uk-geoboundaries:$${VERSION:-1}"
     build:
       context: .
       dockerfile: ./db/DOCKERFILE
