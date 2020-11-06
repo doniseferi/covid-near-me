@@ -1,17 +1,17 @@
-version: '3.3'
+version: '3.8'
 
 services:
   db:
-    image: "uk-geoboundaries:1"
+    image: "uk-geoboundaries:${VERSION:-1}"
     build:
       context: .
       dockerfile: ./db/DOCKERFILE
     env_file: ./src/.env.local
     ports:
-      - "25432:5432"
+      - "5432:5432"
 
   web:
-    image: "covid-near-me:1"
+    image: "covid-near-me:${VERSION:-1}"
     env_file: ./src/.env.local
     build:
       context: .
