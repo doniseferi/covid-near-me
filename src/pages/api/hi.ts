@@ -6,5 +6,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     latitude: 51.516,
     longitude: -0.1749,
   });
-  res.status(200).json(l);
+  res.status(200);
+  res.json(l);
+  return res;
 };

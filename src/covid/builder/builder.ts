@@ -2,7 +2,9 @@ import { CovidRepository } from "../interfaces/covid";
 import { Location } from "../../location/interfaces/localAuthority";
 import httpClient from "../infastructure/index";
 import repository, { HttpClient } from "../repository/covidRepository";
-import resilienceDecorator, { ResiliencyConfig } from "../../resiliency/index";
+import circuitBreakerBuilder, {
+  ResiliencyConfig,
+} from "../../resiliency/index";
 import {
   getNationalCovidApiUrl,
   getCovidDataByLocalAuthorityUrl,
@@ -27,13 +29,20 @@ export default (
     },
     nationalCovidHttpClient
   );
+
+  const circuitBreaker = circuitBreakerBuilder(resiliencyConfig)
+    .build(
+      async (location: Location, date: Date) =>
+        await repo.getAsync(location, date)
+    )
+    .withFallBack(
+      async (location: Location, date: Date) =>
+        await fallback.getAsync(location, date)
+    );
+
   const covidRepository: CovidRepository = {
     getAsync: async (location: Location, date: Date) =>
-      await resilienceDecorator(
-        resiliencyConfig,
-        (location: Location, date: Date) => repo.getAsync(location, date),
-        (location: Location, date: Date) => fallback.getAsync(location, date)
-      ).executeResiliently(location, date),
+      await circuitBreaker.executeResiliently(location, date),
   };
   return {
     build: () => covidRepository,
