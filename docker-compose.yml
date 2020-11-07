@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   db:
@@ -7,12 +7,15 @@ services:
       context: .
       dockerfile: ./db/DOCKERFILE
     env_file: ./src/.env.local
+    restart: always
     ports:
-      - "25432:5432"
+      - "5432:5432"
 
   web:
     image: "covid-near-me:${VERSION:-1}"
     env_file: ./src/.env.local
+    environment:
+      POSTGRES_HOST: db
     build:
       context: .
       dockerfile: ./src/DOCKERFILE
