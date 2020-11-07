@@ -7,7 +7,6 @@ services:
       context: .
       dockerfile: ./db/DOCKERFILE
     env_file: ./src/.env.local
-    restart: always
     ports:
       - "5432:5432"
 
