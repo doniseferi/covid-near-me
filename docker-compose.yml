@@ -7,11 +7,13 @@ services:
       context: .
       dockerfile: ./db/DOCKERFILE
     env_file: ./src/.env.local
+    restart: always
     ports:
       - "5432:5432"
 
   web:
     image: "covid-near-me:${VERSION:-1}"
+    restart: always
     env_file: ./src/.env.local
     environment:
       POSTGRES_HOST: db
