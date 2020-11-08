@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "npm run type-check && npm run build && npm run compose && npm run jestest",
-    "jestest": "jest --runInBand --detectOpenHandles",
+    "test": "npm run type-check && npm run build && npm run compose && sleep 30 && npm run test:jest",
+    "test:sleep": "sleep 10 && jest --runInBand --detectOpenHandles",
+    "test:jest": "jest --runInBand --detectOpenHandles",
     "dev": "next src",
     "build": "next build src",
     "start": "next start src",
