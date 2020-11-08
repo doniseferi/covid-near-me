@@ -8,25 +8,17 @@ interface Repository {
   queryAsync: <T>(command: { text: string; values: string[] }) => Promise<T[]>;
 }
 
+interface LocalAuthorityResult {
+  local_authority_name: string;
+  local_authority_code: string;
+}
+
 export default (repository: Repository): LocalAuthorityRepository => {
   if (!repository) {
     throw new ReferenceError(
       "Dependency not satisfied. LocalAuthorityRepository has a dependency on Repository."
     );
   }
-
-  const getAsync = async ({
-    latitude,
-    longitude,
-  }: GeoCoordinates): Promise<Location> => {
-    const result = await repository.queryAsync<LocalAuthorityResult>({
-      text: `SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)`,
-      values: [`${latitude}`, `${longitude}`],
-    });
-    return validate(result)
-      ? map(result, { latitude, longitude })
-      : throwCoordinatesNotFoundError(latitude, longitude);
-  };
 
   const validate = (entity: LocalAuthorityResult[]) =>
     entity && entity.length === 1;
@@ -38,7 +30,7 @@ export default (repository: Repository): LocalAuthorityRepository => {
     entity.map((e) => ({
       name: e.local_authority_name,
       code: e.local_authority_code,
-      geoCoordinates: geoCoordinates,
+      geoCoordinates,
     }))[0];
 
   const throwCoordinatesNotFoundError = (latitude: number, longitude: number) =>
@@ -50,13 +42,22 @@ export default (repository: Repository): LocalAuthorityRepository => {
       );
     })();
 
+  const getAsync = async ({
+    latitude,
+    longitude,
+  }: GeoCoordinates): Promise<Location> => {
+    const result = await repository.queryAsync<LocalAuthorityResult>({
+      text:
+        "SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)",
+      values: [latitude.toString(), longitude.toString()],
+    });
+    return validate(result)
+      ? map(result, { latitude, longitude })
+      : throwCoordinatesNotFoundError(latitude, longitude);
+  };
+
   return {
     getAsync: async (geoCoordinates: GeoCoordinates) =>
       await getAsync(geoCoordinates),
   };
 };
-
-interface LocalAuthorityResult {
-  local_authority_name: string;
-  local_authority_code: string;
-}

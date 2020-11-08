@@ -2,18 +2,14 @@ version: "3.3"
 
 services:
   db:
-    image: postgis/postgis:12-3.0-alpine
-    volumes:
-      - uk-geoboundaries-data:/var/lib/postgresql/data
+    image: "uk-geoboundaries:${VERSION:-1}"
+    restart: always
+    build:
+      context: .
+      dockerfile: ./db/DOCKERFILE
+    env_file: ./src/.env.local
     ports:
       - "5432:5432"
-    env_file: ./src/.env.local
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
 
   web:
     image: "covid-near-me:${VERSION:-1}"
@@ -28,13 +24,3 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-
-volumes:
-  uk-geoboundaries-data:
-    external: true
