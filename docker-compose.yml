@@ -17,8 +17,6 @@ services:
     env_file: ./src/.env.local
     environment:
       POSTGRES_HOST: db
-      WAIT_HOSTS: db:5432
-      WAIT_AFTER_HOSTS: 30
     build:
       context: .
       dockerfile: ./src/DOCKERFILE
