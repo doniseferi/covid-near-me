@@ -24,7 +24,7 @@ export default (resiliencyConfig: ResiliencyConfig) => {
 
     const withFallback = (fallback: (...args: T) => Promise<R>) => {
       if (!fallback) {
-        throw ReferenceError("Fallback handler is null or undefined.");
+        throw new ReferenceError("Fallback handler is null or undefined.");
       }
       return {
         executeResiliently: async (...args: T) =>
