@@ -6,6 +6,12 @@ export default (covidApiBaseUrl: string) => {
       "Covid Api Base Url is null, undefined, empty or whitespace. Please provide a Covid Api Base Url"
     );
   }
+
+  const throwOnNullUndefinedOrEmpty = (missingParam: string): string =>
+    (() => {
+      throw new Error(`Please provide a ${missingParam}.`);
+    })();
+
   const build = (
     date: Date,
     areaFilter: AreaFilter,
@@ -23,11 +29,6 @@ export default (covidApiBaseUrl: string) => {
             0,
             10
           )};areaType=${areaFilter};areaCode=${areaFilterValue}&structure={"date": "date","name": "areaName","code": "areaCode","newCasesPublished":"newCasesByPublishDate","newCasesBySpecimen":"newCasesBySpecimenDate","newDeathsPublished":"newDeathsByPublishDate","rateOfCumulativeCasesBySpecimenDate":"cumCasesBySpecimenDateRate","cumulativeCasesBySpecimen":"cumCasesBySpecimenDate","rateOfCumulativeDeathsBySpecimen":"cumCasesBySpecimenDateRate","cumulativeDeathsBySpecimen":"cumCasesBySpecimenDate","newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate","cumulativeDeaths28DaysByPublishDate":"cumDeaths28DaysByPublishDate","cumulativeDeaths28DaysByPublishDateRate":"cumDeaths28DaysByPublishDateRate"}`;
-
-  const throwOnNullUndefinedOrEmpty = (missingParam: string): string =>
-    (() => {
-      throw new Error(`Please provide a ${missingParam}.`);
-    })();
 
   return {
     build: (date: Date, areaFilter: AreaFilter, areaFilterValue: string) =>
