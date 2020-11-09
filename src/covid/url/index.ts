@@ -1,14 +1,19 @@
-import { Location } from "../../location/interfaces/localAuthority";
+import { LocalAuthority } from "../../location/interfaces/localAuthority";
 import match from "../../match";
 import { England, Scotland, Wales, NorthernIreland } from "../constants/index";
 import config from "../../config/next.config";
 import builder from "./urlBuilder";
 
-const getCovidDataByLocalAuthorityUrl = (location: Location, date: Date) =>
-  builder(config.covidApiBaseUrl).build(date, "ltla", location.code);
+const getCovidDataByLocalAuthorityUrl = (
+  localAuthority: LocalAuthority,
+  date: Date
+) => builder(config.covidApiBaseUrl).build(date, "ltla", localAuthority.code);
 
-const getNationalCovidApiUrl = (location: Location, date: Date): string => {
-  const nation = match(location.code.charAt(0).toLowerCase())
+const getNationalCovidApiUrl = (
+  localAuthority: LocalAuthority,
+  date: Date
+): string => {
+  const nation = match(localAuthority.code.charAt(0).toLowerCase())
     .on(
       (c) => c === "e",
       () => England

@@ -1,6 +1,6 @@
 import { GeoCoordinates } from "../valueTypes/geoCoordinates";
 
-interface LocalAuthority {
+export interface LocalAuthority {
   name: string;
   code: string;
 }

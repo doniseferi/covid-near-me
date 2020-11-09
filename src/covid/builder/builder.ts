@@ -1,5 +1,5 @@
 import { CovidRepository } from "../interfaces/covid";
-import { Location } from "../../location/interfaces/localAuthority";
+import { LocalAuthority } from "../../location/interfaces/localAuthority";
 import httpClient from "../infastructure/index";
 import repository, { HttpClient } from "../repository/covidRepository";
 import circuitBreakerBuilder, {
@@ -17,32 +17,32 @@ export default (
 ) => {
   const repo = repository(
     {
-      getUrl: (location: Location, date: Date) =>
-        getCovidDataByLocalAuthorityUrl(location, date),
+      getUrl: (localAuthority: LocalAuthority, date: Date) =>
+        getCovidDataByLocalAuthorityUrl(localAuthority, date),
     },
     localAuthorityHttpClient
   );
   const fallback = repository(
     {
-      getUrl: (location: Location, date: Date) =>
-        getNationalCovidApiUrl(location, date),
+      getUrl: (localAuthority: LocalAuthority, date: Date) =>
+        getNationalCovidApiUrl(localAuthority, date),
     },
     nationalCovidHttpClient
   );
 
   const circuitBreaker = circuitBreakerBuilder(resiliencyConfig)
     .build(
-      async (location: Location, date: Date) =>
-        await repo.getAsync(location, date)
+      async (localAuthority: LocalAuthority, date: Date) =>
+        await repo.getAsync(localAuthority, date)
     )
     .withFallBack(
-      async (location: Location, date: Date) =>
-        await fallback.getAsync(location, date)
+      async (localAuthority: LocalAuthority, date: Date) =>
+        await fallback.getAsync(localAuthority, date)
     );
 
   const covidRepository: CovidRepository = {
-    getAsync: async (location: Location, date: Date) =>
-      await circuitBreaker.executeResiliently(location, date),
+    getAsync: async (localAuthority: LocalAuthority, date: Date) =>
+      await circuitBreaker.executeResiliently(localAuthority, date),
   };
   return {
     build: () => covidRepository,

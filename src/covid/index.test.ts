@@ -40,7 +40,6 @@ describe("Covid Repository", () => {
         {
           code: localAuthorityCode,
           name: "abc",
-          geoCoordinates: { latitude: 1, longitude: 1 },
         },
         new Date(Date.UTC(2020, 9, 14))
       );
@@ -120,7 +119,6 @@ describe("Fallback covid repository", () => {
         {
           code: localAuthorityCode,
           name: "abc",
-          geoCoordinates: { latitude: 1, longitude: 1 },
         },
         new Date(Date.UTC(2020, 9, 14))
       );
@@ -200,7 +198,6 @@ describe("", () => {
         {
           code: localAuthorityCode,
           name: "abc",
-          geoCoordinates: { latitude: 1, longitude: 1 },
         },
         new Date(Date.UTC(2020, 9, 14))
       );
