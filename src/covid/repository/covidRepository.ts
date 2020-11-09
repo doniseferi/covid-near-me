@@ -1,8 +1,8 @@
-import { Location } from "../../location/interfaces/localAuthority";
+import { LocalAuthority } from "../../location/interfaces/localAuthority";
 import { Covid, CovidRepository } from "../interfaces/covid";
 
 export interface GetCovidApiUrl {
-  getUrl: (location: Location, date: Date) => string;
+  getUrl: (localAuthority: LocalAuthority, date: Date) => string;
 }
 
 export interface HttpClient {
@@ -18,14 +18,17 @@ export default (
       "Dependency not satisfied. ReportRepository has a dependency on HttpClient."
     );
   }
-  const getAsync = async (location: Location, date: Date): Promise<Covid> => {
-    const url = covidUrlQueryHandler.getUrl(location, date);
+  const getAsync = async (
+    localAuthority: LocalAuthority,
+    date: Date
+  ): Promise<Covid> => {
+    const url = covidUrlQueryHandler.getUrl(localAuthority, date);
     const result = await httpClient.getAsync<{ data: Covid[] }>(url);
     return result.data[0];
   };
 
   return {
-    getAsync: async (location: Location, date: Date) =>
-      await getAsync(location, date),
+    getAsync: async (localAuthority: LocalAuthority, date: Date) =>
+      await getAsync(localAuthority, date),
   };
 };

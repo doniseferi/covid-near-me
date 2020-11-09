@@ -1,4 +1,4 @@
-import { Location } from "../../location/interfaces/localAuthority";
+import { LocalAuthority } from "../../location/interfaces/localAuthority";
 
 export interface Covid {
   newCasesPublished: string;
@@ -14,5 +14,5 @@ export interface Covid {
 }
 
 export interface CovidRepository {
-  getAsync: (location: Location, date: Date) => Promise<Covid>;
+  getAsync: (localAuthority: LocalAuthority, date: Date) => Promise<Covid>;
 }
