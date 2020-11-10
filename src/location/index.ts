@@ -1,6 +1,10 @@
 import config from "../config/next.config";
-import { LocalAuthorityRepository } from "./interfaces/localAuthority";
+import {
+  LocalAuthorityRepository,
+  Location,
+} from "./interfaces/localAuthority";
 import builder from "./builder/builder";
+import { GeoCoordinates } from "./valueTypes/geoCoordinates";
 
 const resiliencyConfig = {
   timeoutInMilliseconds: 6000,
@@ -13,4 +17,5 @@ const locationRepository: LocalAuthorityRepository = builder(
   config.connectionString
 ).build();
 
+export type { Location, GeoCoordinates, LocalAuthorityRepository };
 export { locationRepository, builder };

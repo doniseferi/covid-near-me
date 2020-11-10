@@ -2,11 +2,11 @@ import { Polly, Timing } from "@pollyjs/core";
 import NodeHttpAdapter from "@pollyjs/adapter-node-http";
 import FsPersister from "@pollyjs/persister-fs";
 
-type MockHttpConfig = {
+interface MockHttpConfig {
   name: string;
   mode: "record" | "replay";
   delayInMilliseconds?: number;
-};
+}
 
 const mockHttp = (config: MockHttpConfig): Polly => {
   Polly.register(NodeHttpAdapter);
