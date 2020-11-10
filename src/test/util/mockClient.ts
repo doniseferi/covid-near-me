@@ -1,8 +1,8 @@
 import { HttpResponseMessage } from "../../covid/infastructure/httpClient";
 
-export type MockConfig = {
+export interface MockConfig {
   delayInMilliseoconds: number;
-};
+}
 export default (mockConfig: MockConfig) => {
   const sleep = (delayInMilliseconds: number) => {
     const e = new Date().getTime() + delayInMilliseconds;

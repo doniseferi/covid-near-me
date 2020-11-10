@@ -1,9 +1,8 @@
-import { covidRepository, builder } from "./index";
 import polly from "../test/util/mockHttp";
 import { Polly } from "@pollyjs/core";
 import mockClient from "../test/util/mockClient";
 import { httpClient } from "./infastructure";
-import { CovidRepository } from "./interfaces/covid";
+import { builder, CovidRepository, covidRepository } from "./index";
 
 describe("Covid Repository", () => {
   let mock: Polly;

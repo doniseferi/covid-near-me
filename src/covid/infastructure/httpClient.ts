@@ -1,9 +1,9 @@
 import { HttpClient } from "../repository/covidRepository";
 
-export type HttpResponseMessage<T> = {
+export interface HttpResponseMessage<T> {
   status: number;
   data: T;
-};
+}
 
 const httpClient = (
   getAsync: <T>(url: string) => Promise<HttpResponseMessage<T>>
