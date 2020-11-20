@@ -10,7 +10,7 @@ export interface Covid {
   cumulativeDeathsBySpecimen: string;
   newDeaths28DaysByPublishDate: string;
   cumulativeDeaths28DaysByPublishDate: string;
-  cumulativeDeaths28DaysByPublishDateRate: number;
+  cumulativeDeaths28DaysByPublishDateRate: string;
 }
 
 export interface CovidRepository {
