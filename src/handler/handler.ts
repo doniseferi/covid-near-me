@@ -5,12 +5,12 @@ import {
   LocalAuthorityRepository,
 } from "../location";
 
-interface LocalInformation {
+export interface LocalInformation {
   location: Location;
   covid: Covid;
 }
 
-interface LocalInformationQueryHandler {
+export interface LocalInformationQueryHandler {
   handleAsync: (
     geoCoordinates: GeoCoordinates,
     date: Date

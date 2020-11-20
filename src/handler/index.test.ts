@@ -1,6 +1,6 @@
 import polly from "../test/util/mockHttp";
 import { Polly } from "@pollyjs/core";
-import handler from "./";
+import localInformationQueryHandler from "./index";
 
 describe("Covid Repository", () => {
   let mock: Polly;
@@ -13,9 +13,9 @@ describe("Covid Repository", () => {
   );
   afterAll(() => mock.stop());
   test.concurrent.each`
-    latitude | longitude | newCasesPublished | newCasesBySpecimen | newDeathsPublished | rateOfCumulativeCasesBySpecimenDate | cumulativeCasesBySpecimen | rateOfCumulativeDeathsBySpecimen | cumulativeDeathsBySpecimen | newDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDateRate
+    latitude      | longitude     | newCasesPublished | newCasesBySpecimen | newDeathsPublished | rateOfCumulativeCasesBySpecimenDate | cumulativeCasesBySpecimen | rateOfCumulativeDeathsBySpecimen | cumulativeDeathsBySpecimen | newDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDateRate
     ${55.2408073} | ${-6.5115552} | ${79}             | ${59}              | ${0}               | ${786.4}                            | ${1139}                   | ${786.4}                         | ${1139}                    | ${0}                         | ${null}                             | ${null}
-    ${51.500729}  | ${-0.124625} | ${44}             | ${41}              | ${0}               | ${664.7}                            | ${1737}                   | ${664.7}                         | ${1737}                    | ${0}                         | ${134}                              | ${51.3}
+    ${51.500729}  | ${-0.124625}  | ${44}             | ${41}              | ${0}               | ${664.7}                            | ${1737}                   | ${664.7}                         | ${1737}                    | ${0}                         | ${134}                              | ${51.3}
     ${53.0684881} | ${-4.0764504} | ${16}             | ${11}              | ${0}               | ${778.7}                            | ${970}                    | ${778.7}                         | ${970}                     | ${0}                         | ${null}                             | ${null}
     ${56.9459695} | ${-2.2110162} | ${8}              | ${9}               | ${0}               | ${312}                              | ${815}                    | ${312}                           | ${815}                     | ${0}                         | ${59}                               | ${22.6}
   `(
@@ -34,7 +34,7 @@ describe("Covid Repository", () => {
       cumulativeDeaths28DaysByPublishDate,
       cumulativeDeaths28DaysByPublishDateRate,
     }) => {
-      const { covid } = await handler.handleAsync(
+      const { covid } = await localInformationQueryHandler.handleAsync(
         { latitude, longitude },
         new Date(Date.UTC(2020, 9, 14))
       );
