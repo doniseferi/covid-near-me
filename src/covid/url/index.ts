@@ -2,7 +2,7 @@ import { LocalAuthority } from "../../location/interfaces/localAuthority";
 import match from "../../match";
 import { England, Scotland, Wales, NorthernIreland } from "../constants/index";
 import config from "../../config/next.config";
-import builder from "./urlBuilder";
+import builder from "./builder";
 
 const getCovidDataByLocalAuthorityUrl = (
   localAuthority: LocalAuthority,
