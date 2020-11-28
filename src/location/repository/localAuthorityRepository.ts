@@ -5,12 +5,13 @@ import {
 } from "../interfaces/localAuthority";
 
 interface Repository {
-  queryAsync: <T>(command: { text: string; values: string[] }) => Promise<T[]>;
-}
-
-interface LocalAuthorityResult {
-  local_authority_name: string;
-  local_authority_code: string;
+  queryAsync: (
+    latitude: number,
+    longitude: number
+  ) => Promise<{
+    local_authority_name: string;
+    local_authority_code: string;
+  }>;
 }
 
 export default (repository: Repository): LocalAuthorityRepository => {
@@ -19,19 +20,6 @@ export default (repository: Repository): LocalAuthorityRepository => {
       "Dependency not satisfied. LocalAuthorityRepository has a dependency on Repository."
     );
   }
-
-  const validate = (entity: LocalAuthorityResult[]) =>
-    entity && entity.length === 1;
-
-  const map = (
-    entity: LocalAuthorityResult[],
-    geoCoordinates: GeoCoordinates
-  ): Location =>
-    entity.map((e) => ({
-      name: e.local_authority_name,
-      code: e.local_authority_code,
-      geoCoordinates,
-    }))[0];
 
   const throwCoordinatesNotFoundError = (latitude: number, longitude: number) =>
     (() => {
@@ -46,13 +34,16 @@ export default (repository: Repository): LocalAuthorityRepository => {
     latitude,
     longitude,
   }: GeoCoordinates): Promise<Location> => {
-    const result = await repository.queryAsync<LocalAuthorityResult>({
-      text:
-        "SELECT * From public.get_local_authority_by_geo_coordinates($1, $2)",
-      values: [latitude.toString(), longitude.toString()],
-    });
-    return validate(result)
-      ? map(result, { latitude, longitude })
+    const result = await repository.queryAsync(latitude, longitude);
+    return result
+      ? {
+          code: result.local_authority_code,
+          name: result.local_authority_name,
+          geoCoordinates: {
+            latitude,
+            longitude,
+          },
+        }
       : throwCoordinatesNotFoundError(latitude, longitude);
   };
 
