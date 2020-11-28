@@ -13,6 +13,7 @@ export default (
   if (!resiliencyConfig) {
     throw new ReferenceError("Resiliency Config is null or undefined.");
   }
+
   if (!connectionString) {
     throw new ReferenceError("The connection string is null or undefined.");
   }

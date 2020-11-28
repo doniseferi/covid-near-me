@@ -1,6 +1,6 @@
 import { CovidRepository } from "./interfaces/covid";
 import builder from "./builder/builder";
-import { Covid } from "./interfaces/covid";
+import type { Covid } from "./interfaces/covid";
 
 const resiliencyConfig = {
   timeoutInMilliseconds: 6000,

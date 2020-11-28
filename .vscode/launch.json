@@ -13,6 +13,23 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "port": 9229
+    },{
+      "type": "node",
+      "request": "launch",
+      "name": "Next: Node",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/next",
+      "envFile": "${workspaceFolder}/.env.local",
+      "port": 9229,
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Next: Full",
+      "configurations": [
+        "Next: Node",
+        "Next: Chrome"
+      ]
     }
   ]
 }

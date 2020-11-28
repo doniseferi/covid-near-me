@@ -4,10 +4,16 @@ import { England, Scotland, Wales, NorthernIreland } from "../constants/index";
 import config from "../../config/next.config";
 import builder from "./builder";
 
+const covidApiBaseUrl = () =>
+  config.covidApiBaseUrl ??
+  (() => {
+    throw ReferenceError("Covid Api Base Url is null, undefined or empty.");
+  })();
+
 const getCovidDataByLocalAuthorityUrl = (
   localAuthority: LocalAuthority,
   date: Date
-) => builder(config.covidApiBaseUrl).build(date, "ltla", localAuthority.code);
+) => builder(covidApiBaseUrl()).build(date, "ltla", localAuthority.code);
 
 const getNationalCovidApiUrl = (
   localAuthority: LocalAuthority,
@@ -15,28 +21,28 @@ const getNationalCovidApiUrl = (
 ): string => {
   const nation = match(localAuthority.code.charAt(0).toLowerCase())
     .on(
-      (c) => c === "e",
+      (char) => char === "e",
       () => England
     )
     .on(
-      (c) => c === "s",
+      (char) => char === "s",
       () => Scotland
     )
     .on(
-      (c) => c === "w",
+      (char) => char === "w",
       () => Wales
     )
     .on(
-      (c) => c === "n",
+      (char) => char === "n",
       () => NorthernIreland
     )
-    .otherwise((v) => {
+    .otherwise((char) => {
       throw new Error(
-        `Cannot find nation with a local authority code char of ${v}`
+        `Cannot find nation with a local authority code char of ${char}`
       );
     });
 
-  return builder(config.covidApiBaseUrl).build(date, "nation", nation);
+  return builder(covidApiBaseUrl()).build(date, "nation", nation);
 };
 
 export { getNationalCovidApiUrl, getCovidDataByLocalAuthorityUrl };

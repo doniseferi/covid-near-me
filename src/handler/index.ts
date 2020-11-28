@@ -1,6 +1,7 @@
 import { covidRepository } from "../covid";
 import { locationRepository } from "../location";
-import handler, { LocalInformation } from "./handler";
+import handler from "./handler";
+import type { LocalInformation } from "./handler";
 
 const localInformationQueryHandler = {
   handleAsync: handler(locationRepository, covidRepository).handleAsync,

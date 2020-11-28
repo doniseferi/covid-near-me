@@ -6,21 +6,23 @@ const useGeoCoordinates = () => {
     latitude: 0,
     longitude: 0,
   });
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const geo = navigator.geolocation;
     return geo
       ? (() => {
           const watcher = geo.watchPosition(
-            (result) =>
-              setPosition({
+            (result) => {
+              const coordinates = {
                 latitude: result.coords.latitude,
                 longitude: result.coords.longitude,
-              }),
+              };
+              setPosition(coordinates);
+              geo.clearWatch(watcher);
+            },
             (f) => setError(`${f.code}-${f.message}`)
           );
-          return () => geo.clearWatch(watcher);
         })()
       : setError("Cannot retrieve geocoordinates");
   }, []);
