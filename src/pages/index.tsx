@@ -1,17 +1,11 @@
-import React from "react";
 import Covid from "../components/covid";
 import useGeoCoordinates from "../hooks/useGeoCoordinates";
-import useLocalInformation from "../hooks/useLocalInformation";
+import useCovidStatistics from "../hooks/useLocalInformation";
 
-const App = () => {
+const Index = () => {
   const geoCoordinates = useGeoCoordinates();
-  const localInformation = useLocalInformation(geoCoordinates);
-  return (
-    <Covid
-      location={localInformation.location}
-      covid={localInformation.covid}
-    />
-  );
+  const localInformation = useCovidStatistics(geoCoordinates);
+  return Covid(localInformation.statistics);
 };
 
-export default App;
+export default Index;

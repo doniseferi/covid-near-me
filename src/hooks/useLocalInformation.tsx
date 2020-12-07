@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { LocalInformation } from "../handler";
+import { LocalCovidStatistics } from "../handler";
 import { GeoCoordinates } from "../location";
 
-const skeleton: LocalInformation = {
+const skeleton: LocalCovidStatistics = {
   location: {
     name: "",
     code: "",
@@ -12,17 +12,22 @@ const skeleton: LocalInformation = {
       longitude: 0,
     },
   },
-  covid: {
-    newCasesPublished: "0",
-    newCasesBySpecimen: "0",
-    newDeathsPublished: "0",
-    rateOfCumulativeCasesBySpecimenDate: "0",
-    cumulativeCasesBySpecimen: "0",
-    rateOfCumulativeDeathsBySpecimen: "0",
-    cumulativeDeathsBySpecimen: "0",
-    newDeaths28DaysByPublishDate: "0",
-    cumulativeDeaths28DaysByPublishDate: "0",
-    cumulativeDeaths28DaysByPublishDateRate: "0",
+  statistics: {
+    areaType: "",
+    areaName: "",
+    areaCode: "",
+    date: "",
+    newCasesByPublishDate: 0,
+    cumCasesByPublishDate: 0,
+    newCasesBySpecimenDate: 0,
+    cumCasesBySpecimenDateRate: 0,
+    cumCasesBySpecimenDate: 0,
+    newDeaths28DaysByPublishDate: 0,
+    cumDeaths28DaysByPublishDate: 0,
+    cumDeaths28DaysByPublishDateRate: 0,
+    newDeaths28DaysByDeathDate: 0,
+    cumDeaths28DaysByDeathDate: 0,
+    cumDeaths28DaysByDeathDateRate: 0,
   },
 };
 
@@ -30,9 +35,10 @@ const useLocalInformation = (geoCoordinates: GeoCoordinates) => {
   const areDefaultGeoCoordinates = (geoCoordinates: GeoCoordinates) =>
     geoCoordinates.latitude === 0 && geoCoordinates.longitude == 0;
 
-  const [localInformation, setLocalInformation] = useState<LocalInformation>(
-    skeleton
-  );
+  const [
+    localInformation,
+    setLocalInformation,
+  ] = useState<LocalCovidStatistics>(skeleton);
   useEffect(() => {
     fetchData();
   }, [`${geoCoordinates.latitude}{${geoCoordinates.longitude}`]);
@@ -40,7 +46,7 @@ const useLocalInformation = (geoCoordinates: GeoCoordinates) => {
   const fetchData = async () => {
     if (!areDefaultGeoCoordinates(geoCoordinates)) {
       const url = `/api/covid?latitude=${geoCoordinates.latitude}&longitude=${geoCoordinates.longitude}`;
-      const { data } = await axios.get<LocalInformation>(url);
+      const { data } = await axios.get<LocalCovidStatistics>(url);
       setLocalInformation(data);
       // TODO: catch error log and rethrow
     }

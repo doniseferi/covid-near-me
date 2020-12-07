@@ -1,6 +1,6 @@
 import { CovidRepository } from "./interfaces/covid";
 import builder from "./builder/builder";
-import type { Covid } from "./interfaces/covid";
+import { CovidStatistics, NationalCovidStatistics } from "./interfaces/covid";
 
 const resiliencyConfig = {
   timeoutInMilliseconds: 6000,
@@ -10,5 +10,6 @@ const resiliencyConfig = {
 
 const covidRepository: CovidRepository = builder(resiliencyConfig).build();
 
-export type { Covid, CovidRepository };
+export type { CovidStatistics, NationalCovidStatistics, CovidRepository };
+
 export { covidRepository, builder };

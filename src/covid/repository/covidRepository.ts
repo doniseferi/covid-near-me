@@ -1,5 +1,5 @@
 import { LocalAuthority } from "../../location/interfaces/localAuthority";
-import { Covid, CovidRepository } from "../interfaces/covid";
+import { CovidRepository, CovidStatistics } from "../interfaces/covid";
 
 export interface GetCovidApiUrl {
   getUrl: (localAuthority: LocalAuthority, date: Date) => string;
@@ -21,9 +21,9 @@ export default (
   const getAsync = async (
     localAuthority: LocalAuthority,
     date: Date
-  ): Promise<Covid> => {
+  ): Promise<CovidStatistics> => {
     const url = covidUrlQueryHandler.getUrl(localAuthority, date);
-    const result = await httpClient.getAsync<{ data: Covid[] }>(url);
+    const result = await httpClient.getAsync<{ data: CovidStatistics[] }>(url);
     return result.data[0];
   };
 

@@ -1,39 +1,55 @@
-import { LocalInformation } from "../handler";
+import { CovidStatistics } from "../covid";
 
-const Covid = ({ location, covid }: LocalInformation) => (
+const Covid = (covidStatistics: CovidStatistics) => (
   <dl>
-    <dt>local authority</dt>
-    <dd>{location.code}</dd>
+    <dt>areaType</dt>
+    <dd>{covidStatistics.areaType}</dd>
 
-    <dt>newCasesPublished</dt>
-    <dd>{covid.newCasesPublished}</dd>
+    <dt>areaName</dt>
+    <dd>{covidStatistics.areaName}</dd>
 
-    <dt>newCasesBySpecimen</dt>
-    <dd>{covid.newCasesBySpecimen}</dd>
+    <dt>areaCode</dt>
+    <dd>{covidStatistics.areaCode}</dd>
 
-    <dt>newDeathsPublished</dt>
-    <dd>{covid.newDeathsPublished}</dd>
+    <dt>date</dt>
+    <dd>{covidStatistics.date}</dd>
 
-    <dt>rateOfCumulativeCasesBySpecimenDate</dt>
-    <dd>{covid.rateOfCumulativeCasesBySpecimenDate}</dd>
+    <dt>newCasesByPublishDate</dt>
+    <dd>{covidStatistics.newCasesByPublishDate}</dd>
 
-    <dt>cumulativeCasesBySpecimen</dt>
-    <dd>{covid.cumulativeCasesBySpecimen}</dd>
+    <dt>cumCasesByPublishDate</dt>
+    <dd>{covidStatistics.cumCasesByPublishDate}</dd>
 
-    <dt>rateOfCumulativeDeathsBySpecimen</dt>
-    <dd>{covid.rateOfCumulativeDeathsBySpecimen}</dd>
+    <dt>newCasesBySpecimenDate</dt>
+    <dd>{covidStatistics.newCasesBySpecimenDate}</dd>
 
-    <dt>cumulativeDeathsBySpecimen</dt>
-    <dd>{covid.cumulativeDeathsBySpecimen}</dd>
+    <dt>cumCasesBySpecimenDateRate</dt>
+    <dd>{covidStatistics.cumCasesBySpecimenDateRate}</dd>
+
+    <dt>cumCasesBySpecimenDate</dt>
+    <dd>{covidStatistics.cumCasesBySpecimenDate}</dd>
 
     <dt>newDeaths28DaysByPublishDate</dt>
-    <dd>{covid.newDeaths28DaysByPublishDate}</dd>
+    <dd>{covidStatistics.newDeaths28DaysByPublishDate}</dd>
 
-    <dt>cumulativeDeaths28DaysByPublishDate</dt>
-    <dd>{covid.cumulativeDeaths28DaysByPublishDate}</dd>
+    <dt>cumDeaths28DaysByPublishDate</dt>
+    <dd>{covidStatistics.cumDeaths28DaysByPublishDate}</dd>
 
-    <dt>cumulativeDeaths28DaysByPublishDateRate</dt>
-    <dd>{covid.cumulativeDeaths28DaysByPublishDateRate}</dd>
+    <dt>cumDeaths28DaysByPublishDateRate</dt>
+    <dd>{covidStatistics.cumDeaths28DaysByPublishDateRate}</dd>
+
+    <dt>newDeaths28DaysByDeathDate</dt>
+    <dd>{covidStatistics.newDeaths28DaysByDeathDate}</dd>
+
+    <dt>cumDeaths28DaysByDeathDate</dt>
+    <dd>{covidStatistics.cumDeaths28DaysByDeathDate}</dd>
+
+    {covidStatistics.cumDeaths28DaysByDeathDateRate ? (
+      <>
+        <dt>cumDeaths28DaysByDeathDateRate</dt>
+        <dd>{covidStatistics.cumDeaths28DaysByDeathDateRate}</dd>{" "}
+      </>
+    ) : null}
   </dl>
 );
 

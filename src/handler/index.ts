@@ -1,11 +1,11 @@
 import { covidRepository } from "../covid";
 import { locationRepository } from "../location";
 import handler from "./handler";
-import type { LocalInformation } from "./handler";
+import { LocalCovidStatistics } from "./handler";
 
-const localInformationQueryHandler = {
+const covidStatsticsQueryHandler = {
   handleAsync: handler(locationRepository, covidRepository).handleAsync,
 };
 
-export type { LocalInformation };
-export default localInformationQueryHandler;
+export type { LocalCovidStatistics };
+export default covidStatsticsQueryHandler;
