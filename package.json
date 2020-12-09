@@ -9,7 +9,7 @@
     "testjest:win32": "npm run jest",
     "test": "npm run type-check && npm run build && npm run compose && sleep 30 && npm run testjest",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "dev": "npm run build && cross-env NODE_OPTIONS='--inspect' next dev",
+    "dev": "npm run build && cross-env NODE_OPTIONS='--inspect' next dev src",
     "build": "next build src",
     "start": "npm run build && next start src",
     "type-check": "tsc",

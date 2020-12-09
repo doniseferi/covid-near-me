@@ -18,9 +18,15 @@ export interface CovidStatistics {
   cumDeaths28DaysByDeathDateRate: number | null;
 }
 
+type AgeStatistics = {
+  age: string;
+  value: number;
+  rate: number;
+};
+
 export interface NationalCovidStatistics extends CovidStatistics {
-  maleCases: number | null;
-  femaleCases: number | null;
+  maleCases: AgeStatistics[] | null;
+  femaleCases: AgeStatistics[] | null;
   newPillarOneTestsByPublishDate: number | null;
   cumPillarOneTestsByPublishDate: number | null;
   newPillarTwoTestsByPublishDate: number | null;
@@ -29,7 +35,7 @@ export interface NationalCovidStatistics extends CovidStatistics {
   cumPillarThreeTestsByPublishDate: number | null;
   newAdmissions: number | null;
   cumAdmissions: number | null;
-  cumAdmissionsByAge: number | null;
+  cumAdmissionsByAge: AgeStatistics[] | null;
   cumTestsByPublishDate: number | null;
   newTestsByPublishDate: number | null;
   covidOccupiedMVBeds: number | null;

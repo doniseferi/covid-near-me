@@ -8,7 +8,6 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
     { latitude, longitude },
     new Date(Date.now())
   );
-
   return res.status(200).json(covidStatistics);
 };
 
