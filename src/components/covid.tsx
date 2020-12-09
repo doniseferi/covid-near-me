@@ -26,93 +26,94 @@ const isNationalCovidStatistics = (
 const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
   return (
     <dl>
-      {statistics.areaType ? (
-        <>
-          <dt>areaType</dt>
-          <dd>{statistics.areaType}</dd>
-        </>
-      ) : null}
       {statistics.areaName ? (
         <>
-          <dt>areaName</dt>
+          <dt>location</dt>
           <dd>{statistics.areaName}</dd>
-        </>
-      ) : null}
-      {statistics.areaCode ? (
-        <>
-          <dt>areaCode</dt>
-          <dd>{statistics.areaCode}</dd>
         </>
       ) : null}
       {statistics.date ? (
         <>
           <dt>date</dt>
-          <dd>{statistics.date}</dd>
+          <dd>{new Date(statistics.date).toISOString().split("T")[0]}</dd>
         </>
       ) : null}
       {statistics.newCasesByPublishDate ? (
         <>
-          <dt>newCasesByPublishDate</dt>
+          <dt>new cases</dt>
           <dd>{statistics.newCasesByPublishDate}</dd>
         </>
       ) : null}
       {statistics.cumCasesByPublishDate ? (
         <>
-          <dt>cumCasesByPublishDate</dt>
+          <dt>cumulative cases</dt>
           <dd>{statistics.cumCasesByPublishDate}</dd>
         </>
       ) : null}
       {statistics.newCasesBySpecimenDate ? (
         <>
-          <dt>newCasesBySpecimenDate</dt>
+          <dt>new positive cases collected on date</dt>
           <dd>{statistics.newCasesBySpecimenDate}</dd>
         </>
       ) : null}
       {statistics.cumCasesBySpecimenDateRate ? (
         <>
-          <dt>cumCasesBySpecimenDateRate</dt>
+          <dt>
+            rate of cumulative cases by specimen date per 100k resident
+            population
+          </dt>
           <dd>{statistics.cumCasesBySpecimenDateRate}</dd>
         </>
       ) : null}
       {statistics.cumCasesBySpecimenDate ? (
         <>
-          <dt>cumCasesBySpecimenDate</dt>
+          <dt>
+            cumulative cases by specimen date per 100k resident population
+          </dt>
           <dd>{statistics.cumCasesBySpecimenDate}</dd>
         </>
       ) : null}
       {statistics.newDeaths28DaysByPublishDate ? (
         <>
-          <dt>newDeaths28DaysByPublishDate</dt>
+          <dt>deaths within 28 days of positive test</dt>
           <dd>{statistics.newDeaths28DaysByPublishDate}</dd>
         </>
       ) : null}
       {statistics.cumDeaths28DaysByPublishDate ? (
         <>
-          <dt>cumDeaths28DaysByPublishDate</dt>
+          <dt>cumulative deaths within 28 days of positive test</dt>
           <dd>{statistics.cumDeaths28DaysByPublishDate}</dd>
         </>
       ) : null}
       {statistics.cumDeaths28DaysByPublishDateRate ? (
         <>
-          <dt>cumDeaths28DaysByPublishDateRate</dt>
+          <dt>
+            Rate of cumulative deaths within 28 days of positive test per 100k
+            resident population
+          </dt>
           <dd>{statistics.cumDeaths28DaysByPublishDateRate}</dd>
         </>
       ) : null}
       {statistics.newDeaths28DaysByDeathDate ? (
         <>
-          <dt>newDeaths28DaysByDeathDate</dt>
+          <dt>deaths within 28 days of positive test by death date</dt>
           <dd>{statistics.newDeaths28DaysByDeathDate}</dd>
         </>
       ) : null}
       {statistics.cumDeaths28DaysByDeathDate ? (
         <>
-          <dt>cumDeaths28DaysByDeathDate</dt>
+          <dt>
+            cumulative deaths within 28 days of positive test by death date
+          </dt>
           <dd>{statistics.cumDeaths28DaysByDeathDate}</dd>
         </>
       ) : null}
       {statistics.cumDeaths28DaysByDeathDateRate ? (
         <>
-          <dt>cumDeaths28DaysByDeathDateRate</dt>
+          <dt>
+            rate of cumulative deaths within 28 days of positive test by death
+            date per 100k resident population
+          </dt>
           <dd>{statistics.cumDeaths28DaysByDeathDateRate}</dd>
         </>
       ) : null}
@@ -123,10 +124,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
                 ? statistics.maleCases.map((x) => {
                     return (
                       <>
-                        <dt>age</dt>
-                        <dd>{x.age}</dd>
-
-                        <dt>value</dt>
+                        <dt>cases by age {x.age} (male)</dt>
                         <dd>{x.value}</dd>
 
                         <dt>rate</dt>
@@ -142,10 +140,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
                 ? statistics.femaleCases.map((x) => {
                     return (
                       <>
-                        <dt>age</dt>
-                        <dd>{x.age}</dd>
-
-                        <dt>value</dt>
+                        <dt>cases by age {x.age} (female)</dt>
                         <dd>{x.value}</dd>
 
                         <dt>rate</dt>
@@ -158,7 +153,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.newPillarOneTestsByPublishDate ? (
                 <>
-                  <dt>newPillarOneTestsByPublishDate</dt>
+                  <dt>new pillar one tests by publish date</dt>
                   <dd>{statistics.newPillarOneTestsByPublishDate}</dd>
                 </>
               ) : null;
@@ -166,7 +161,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.cumPillarOneTestsByPublishDate ? (
                 <>
-                  <dt>cumPillarOneTestsByPublishDate</dt>
+                  <dt>cumulative pillar one tests by publish date</dt>
                   <dd>{statistics.cumPillarOneTestsByPublishDate}</dd>
                 </>
               ) : null;
@@ -174,7 +169,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.newPillarTwoTestsByPublishDate ? (
                 <>
-                  <dt>newPillarTwoTestsByPublishDate</dt>
+                  <dt>new pillar two tests by publish date</dt>
                   <dd>{statistics.newPillarTwoTestsByPublishDate}</dd>
                 </>
               ) : null;
@@ -182,7 +177,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.cumPillarTwoTestsByPublishDate ? (
                 <>
-                  <dt>cumPillarTwoTestsByPublishDate</dt>
+                  <dt>cumulative pillar two tests by publish date</dt>
                   <dd>{statistics.cumPillarTwoTestsByPublishDate}</dd>
                 </>
               ) : null;
@@ -190,7 +185,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.newPillarThreeTestsByPublishDate ? (
                 <>
-                  <dt>newPillarThreeTestsByPublishDate</dt>
+                  <dt>new pillar three tests by publish date</dt>
                   <dd>{statistics.newPillarThreeTestsByPublishDate}</dd>
                 </>
               ) : null;
@@ -198,7 +193,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.cumPillarThreeTestsByPublishDate ? (
                 <>
-                  <dt>cumPillarThreeTestsByPublishDate</dt>
+                  <dt>cumulative pillar three tests by publish date</dt>
                   <dd>{statistics.cumPillarThreeTestsByPublishDate}</dd>
                 </>
               ) : null;
@@ -206,7 +201,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.newAdmissions ? (
                 <>
-                  <dt>newAdmissions</dt>
+                  <dt>new admissions</dt>
                   <dd>{statistics.newAdmissions}</dd>
                 </>
               ) : null;
@@ -214,7 +209,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.cumAdmissions ? (
                 <>
-                  <dt>cumAdmissions</dt>
+                  <dt>cumulative number of admissions</dt>
                   <dd>{statistics.cumAdmissions}</dd>
                 </>
               ) : null;
@@ -224,10 +219,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
                 ? statistics.cumAdmissionsByAge.map((x) => {
                     return (
                       <>
-                        <dt>age</dt>
-                        <dd>{x.age}</dd>
-
-                        <dt>value</dt>
+                        <dt>cumulative admissions by age {x.age}</dt>
                         <dd>{x.value}</dd>
 
                         <dt>rate</dt>
@@ -240,7 +232,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.cumTestsByPublishDate ? (
                 <>
-                  <dt>cumTestsByPublishDate</dt>
+                  <dt>cumulative tests</dt>
                   <dd>{statistics.cumTestsByPublishDate}</dd>
                 </>
               ) : null;
@@ -248,7 +240,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.newTestsByPublishDate ? (
                 <>
-                  <dt>newTestsByPublishDate</dt>
+                  <dt>New tests</dt>
                   <dd>{statistics.newTestsByPublishDate}</dd>
                 </>
               ) : null;
@@ -256,7 +248,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.covidOccupiedMVBeds ? (
                 <>
-                  <dt>covidOccupiedMVBeds</dt>
+                  <dt>covid-19 occupied beds with mechanical ventilators</dt>
                   <dd>{statistics.covidOccupiedMVBeds}</dd>
                 </>
               ) : null;
@@ -264,7 +256,7 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.hospitalCases ? (
                 <>
-                  <dt>hospitalCases</dt>
+                  <dt>hospital cases</dt>
                   <dd>{statistics.hospitalCases}</dd>
                 </>
               ) : null;
@@ -273,8 +265,11 @@ const Covid = (statistics: NationalCovidStatistics | CovidStatistics) => {
             {
               statistics.cumDeaths28DaysByDeathDateRate ? (
                 <>
-                  <dt>cumDeaths28DaysByDeathDateRate</dt>
-                  <dd>{statistics.cumDeaths28DaysByDeathDateRate}</dd>{" "}
+                  <dt>
+                    rate of cumulative deaths within 28 days of positive test by
+                    death date per 100k resident population
+                  </dt>
+                  <dd>{statistics.cumDeaths28DaysByDeathDateRate}</dd>
                 </>
               ) : null;
             }
