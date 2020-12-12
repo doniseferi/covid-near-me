@@ -1,6 +1,6 @@
 import Covid from "../components/covid";
 import useGeoCoordinates from "../hooks/useGeoCoordinates";
-import useCovidStatistics from "../hooks/useLocalInformation";
+import useCovidStatistics from "../hooks/useCovidStatistics";
 
 const Index = () => {
   const geoCoordinates = useGeoCoordinates();

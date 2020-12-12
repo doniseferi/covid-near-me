@@ -18,12 +18,10 @@
     },
     {
       "type": "node",
-      "request": "attach",
+      "request": "launch",
       "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "port": 9229
+      "program": "${workspaceFolder}/node_modules/next/dist/bin/next",
+        "envFile": "${workspaceFolder}/src/.env.local",
     }
   ]
 }

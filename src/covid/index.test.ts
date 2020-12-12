@@ -4,9 +4,9 @@ import mockClient from "../test/util/mockClient";
 import { httpClient } from "./infastructure";
 import {
   builder,
-  CovidRepository,
   covidRepository,
   NationalCovidStatistics,
+  StatisticsRepository,
 } from "./index";
 
 describe("Covid Repository", () => {
@@ -78,7 +78,7 @@ describe("Covid Repository", () => {
 });
 
 describe("Fallback covid repository", () => {
-  let _covidRepository: CovidRepository;
+  let _covidRepository: StatisticsRepository;
   let mock: Polly;
   beforeAll(() => {
     const testResiliencyConfig = {

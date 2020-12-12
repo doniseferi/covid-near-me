@@ -18,11 +18,11 @@ export interface CovidStatistics {
   cumDeaths28DaysByDeathDateRate: number | null;
 }
 
-type AgeStatistics = {
+export interface AgeStatistics {
   age: string;
   value: number;
   rate: number;
-};
+}
 
 export interface NationalCovidStatistics extends CovidStatistics {
   maleCases: AgeStatistics[] | null;
@@ -42,9 +42,16 @@ export interface NationalCovidStatistics extends CovidStatistics {
   hospitalCases: number | null;
 }
 
-export interface CovidRepository {
+export interface StatisticsRepository {
   getAsync: (
     localAuthority: LocalAuthority,
     date: Date
-  ) => Promise<CovidStatistics>;
+  ) => Promise<CovidStatistics | NationalCovidStatistics>;
+}
+
+export interface CovidRepository {
+  getAsync: <T extends CovidStatistics | NationalCovidStatistics>(
+    localAuthority: LocalAuthority,
+    date: Date
+  ) => Promise<T>;
 }

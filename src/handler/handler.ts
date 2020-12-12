@@ -1,7 +1,7 @@
 import {
-  CovidRepository,
   CovidStatistics,
   NationalCovidStatistics,
+  StatisticsRepository,
 } from "../covid";
 import {
   Location,
@@ -9,41 +9,30 @@ import {
   LocalAuthorityRepository,
 } from "../location";
 
-export interface LocalCovidStatistics {
+export interface Covid {
   location: Location;
-  statistics: CovidStatistics;
+  statistics: CovidStatistics | NationalCovidStatistics;
 }
 
-export interface NationalCovidStastics {
-  location: Location;
-  statistics: NationalCovidStatistics;
-}
-
-export interface LocalCovidStatisticsQueryHandler {
-  handleAsync: (
-    geoCoordinates: GeoCoordinates,
-    date: Date
-  ) => Promise<LocalCovidStatistics>;
-}
-export interface NationalCovidStatisticsQueryHandler {
-  handleAsync: (
-    geoCoordinates: GeoCoordinates,
-    date: Date
-  ) => Promise<NationalCovidStastics>;
+export interface CovidQueryHandler {
+  handleAsync: (geoCoordinates: GeoCoordinates, date: Date) => Promise<Covid>;
 }
 
 export default (
   localAuthorityRepository: LocalAuthorityRepository,
-  covidRepository: CovidRepository
-): LocalCovidStatisticsQueryHandler | NationalCovidStatisticsQueryHandler => {
+  covidRepository: StatisticsRepository
+): CovidQueryHandler => {
   const handle = async (
     geoCoordinates: GeoCoordinates,
     date: Date
-  ): Promise<LocalCovidStatistics> => {
+  ): Promise<Covid> => {
     const localAuthority = await localAuthorityRepository.getAsync(
       geoCoordinates
     );
-    const covidStatistics = await covidRepository.getAsync(localAuthority, date);
+    const covidStatistics = await covidRepository.getAsync(
+      localAuthority,
+      date
+    );
     return {
       location: localAuthority,
       statistics: covidStatistics,

@@ -1,4 +1,4 @@
-import { CovidRepository } from "./interfaces/covid";
+import { CovidRepository, StatisticsRepository } from "./interfaces/covid";
 import builder from "./builder/builder";
 import { CovidStatistics, NationalCovidStatistics } from "./interfaces/covid";
 
@@ -8,8 +8,13 @@ const resiliencyConfig = {
   errorThresholdPercentage: 50,
 };
 
-const covidRepository: CovidRepository = builder(resiliencyConfig).build();
+const covidRepository: StatisticsRepository = builder(resiliencyConfig).build();
 
-export type { CovidStatistics, NationalCovidStatistics, CovidRepository };
+export type {
+  StatisticsRepository,
+  CovidStatistics,
+  NationalCovidStatistics,
+  CovidRepository,
+};
 
 export { covidRepository, builder };

@@ -16,7 +16,7 @@ const httpClient = (
     }
 
     const { data } = await getAsync<T>(url);
-     return data;
+    return data;
   };
 
   return { getAsync: async (url: string) => await get(url) };
