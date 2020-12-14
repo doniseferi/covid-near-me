@@ -12,56 +12,58 @@ describe("Covid Repository", () => {
       }))
   );
   afterAll(() => mock.stop());
+
   test.concurrent.each`
-    latitude      | longitude     | newCasesPublished | newCasesBySpecimen | newDeathsPublished | rateOfCumulativeCasesBySpecimenDate | cumulativeCasesBySpecimen | rateOfCumulativeDeathsBySpecimen | cumulativeDeathsBySpecimen | newDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDate | cumulativeDeaths28DaysByPublishDateRate
-    ${55.2408073} | ${-6.5115552} | ${79}             | ${59}              | ${0}               | ${786.4}                            | ${1139}                   | ${786.4}                         | ${1139}                    | ${0}                         | ${null}                             | ${null}
-    ${51.500729}  | ${-0.124625}  | ${44}             | ${41}              | ${0}               | ${664.7}                            | ${1737}                   | ${664.7}                         | ${1737}                    | ${0}                         | ${134}                              | ${51.3}
-    ${53.0684881} | ${-4.0764504} | ${16}             | ${11}              | ${0}               | ${778.7}                            | ${970}                    | ${778.7}                         | ${970}                     | ${0}                         | ${null}                             | ${null}
-    ${56.9459695} | ${-2.2110162} | ${8}              | ${9}               | ${0}               | ${312}                              | ${815}                    | ${312}                           | ${815}                     | ${0}                         | ${59}                               | ${22.6}
-  `(
+    latitude      | longitude     | newCasesByPublishDate | cumCasesByPublishDate | cumCasesBySpecimenDateRate | newCasesBySpecimenDate | cumCasesBySpecimenDate | newDeaths28DaysByPublishDate | cumDeaths28DaysByPublishDate | cumDeaths28DaysByPublishDateRate | newDeaths28DaysByDeathDate | cumDeaths28DaysByDeathDate | cumDeaths28DaysByDeathDateRate
+    ${55.2408073} | ${-6.5115552} | ${79}                 | ${1078}               | ${782.9}                   | ${59}                  | ${1134}                | ${0}                         | ${39}                        | ${26.9}                          | ${0}                       | ${39}                      | ${26.9}
+    ${51.500729}  | ${-0.124625}  | ${44}                 | ${null}               | ${660.5}                   | ${30}                  | ${1726}                | ${0}                         | ${134}                       | ${51.3}                          | ${2}                       | ${136}                     | ${52}
+    ${53.0684881} | ${-4.0764504} | ${16}                 | ${921}                | ${778.7}                   | ${11}                  | ${970}                 | ${0}                         | ${null}                      | ${null}                          | ${null}                    | ${null}                    | ${null}
+    ${56.9459695} | ${-2.2110162} | ${8}                  | ${800}                | ${313.2}                   | ${9}                   | ${818}                 | ${0}                         | ${59}                        | ${22.6}                          | ${0}                       | ${59}                      | ${22.6}
+    `(
     "returns covid data for local authorities",
     async ({
       latitude,
       longitude,
-      newCasesPublished,
-      newCasesBySpecimen,
-      newDeathsPublished,
-      rateOfCumulativeCasesBySpecimenDate,
-      cumulativeCasesBySpecimen,
-      rateOfCumulativeDeathsBySpecimen,
-      cumulativeDeathsBySpecimen,
+      newCasesByPublishDate,
+      cumCasesByPublishDate,
+      cumCasesBySpecimenDateRate,
+      newCasesBySpecimenDate,
+      cumCasesBySpecimenDate,
       newDeaths28DaysByPublishDate,
-      cumulativeDeaths28DaysByPublishDate,
-      cumulativeDeaths28DaysByPublishDateRate,
+      cumDeaths28DaysByPublishDate,
+      cumDeaths28DaysByPublishDateRate,
+      newDeaths28DaysByDeathDate,
+      cumDeaths28DaysByDeathDate,
+      cumDeaths28DaysByDeathDateRate,
     }) => {
-      const { covid } = await localInformationQueryHandler.handleAsync(
+      const { statistics } = await localInformationQueryHandler.handleAsync(
         { latitude, longitude },
         new Date(Date.UTC(2020, 9, 14))
       );
-
-      expect(covid.newCasesPublished).toEqual(newCasesPublished);
-      expect(covid.newCasesBySpecimen).toEqual(newCasesBySpecimen);
-      expect(covid.newDeathsPublished).toEqual(newDeathsPublished);
-      expect(covid.rateOfCumulativeCasesBySpecimenDate).toEqual(
-        rateOfCumulativeCasesBySpecimenDate
+      expect(statistics.newCasesByPublishDate).toEqual(newCasesByPublishDate);
+      expect(statistics.cumCasesByPublishDate).toEqual(cumCasesByPublishDate);
+      expect(statistics.cumCasesBySpecimenDateRate).toEqual(
+        cumCasesBySpecimenDateRate
       );
-      expect(covid.cumulativeCasesBySpecimen).toEqual(
-        cumulativeCasesBySpecimen
-      );
-      expect(covid.rateOfCumulativeDeathsBySpecimen).toEqual(
-        rateOfCumulativeDeathsBySpecimen
-      );
-      expect(covid.cumulativeDeathsBySpecimen).toEqual(
-        cumulativeDeathsBySpecimen
-      );
-      expect(covid.newDeaths28DaysByPublishDate).toEqual(
+      expect(statistics.newCasesBySpecimenDate).toEqual(newCasesBySpecimenDate);
+      expect(statistics.cumCasesBySpecimenDate).toEqual(cumCasesBySpecimenDate);
+      expect(statistics.newDeaths28DaysByPublishDate).toEqual(
         newDeaths28DaysByPublishDate
       );
-      expect(covid.cumulativeDeaths28DaysByPublishDate).toEqual(
-        cumulativeDeaths28DaysByPublishDate
+      expect(statistics.cumDeaths28DaysByPublishDate).toEqual(
+        cumDeaths28DaysByPublishDate
       );
-      expect(covid.cumulativeDeaths28DaysByPublishDateRate).toEqual(
-        cumulativeDeaths28DaysByPublishDateRate
+      expect(statistics.cumDeaths28DaysByPublishDateRate).toEqual(
+        cumDeaths28DaysByPublishDateRate
+      );
+      expect(statistics.newDeaths28DaysByDeathDate).toEqual(
+        newDeaths28DaysByDeathDate
+      );
+      expect(statistics.cumDeaths28DaysByDeathDate).toEqual(
+        cumDeaths28DaysByDeathDate
+      );
+      expect(statistics.cumDeaths28DaysByDeathDateRate).toEqual(
+        cumDeaths28DaysByDeathDateRate
       );
     }
   );

@@ -4,7 +4,7 @@ import { England, Scotland, Wales, NorthernIreland } from "../constants/index";
 import config from "../../config/next.config";
 import builder from "./builder";
 
-const covidApiBaseUrl = () =>
+const getCovidApiBaseUrl = () =>
   config.covidApiBaseUrl ??
   (() => {
     throw ReferenceError("Covid Api Base Url is null, undefined or empty.");
@@ -13,7 +13,7 @@ const covidApiBaseUrl = () =>
 const getCovidDataByLocalAuthorityUrl = (
   localAuthority: LocalAuthority,
   date: Date
-) => builder(covidApiBaseUrl()).build(date, "ltla", localAuthority.code);
+) => builder(getCovidApiBaseUrl()).build(date, "ltla", localAuthority.code);
 
 const getNationalCovidApiUrl = (
   localAuthority: LocalAuthority,
@@ -42,7 +42,7 @@ const getNationalCovidApiUrl = (
       );
     });
 
-  return builder(covidApiBaseUrl()).build(date, "nation", nation);
+  return builder(getCovidApiBaseUrl()).build(date, "nation", nation);
 };
 
 export { getNationalCovidApiUrl, getCovidDataByLocalAuthorityUrl };

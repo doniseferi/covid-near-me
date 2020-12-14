@@ -7,6 +7,9 @@ export default (covidApiBaseUrl: string) => {
     );
   }
 
+  const localAuthorityRequestDataStructure = `{"areaType":"areaType","areaName":"areaName","areaCode":"areaCode","date":"date","newCasesByPublishDate":"newCasesByPublishDate","cumCasesByPublishDate":"cumCasesByPublishDate","cumCasesBySpecimenDateRate":"cumCasesBySpecimenDateRate","newCasesBySpecimenDate":"newCasesBySpecimenDate","cumCasesBySpecimenDate":"cumCasesBySpecimenDate","newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate","cumDeaths28DaysByPublishDate":"cumDeaths28DaysByPublishDate","cumDeaths28DaysByPublishDateRate":"cumDeaths28DaysByPublishDateRate","newDeaths28DaysByDeathDate":"newDeaths28DaysByDeathDate","cumDeaths28DaysByDeathDate":"cumDeaths28DaysByDeathDate","cumDeaths28DaysByDeathDateRate":"cumDeaths28DaysByDeathDateRate"}`;
+  const nationRequestDataStructure = `{"areaType":"areaType","areaName":"areaName","areaCode":"areaCode","date":"date","newCasesByPublishDate":"newCasesByPublishDate","cumCasesByPublishDate":"cumCasesByPublishDate","cumCasesBySpecimenDateRate":"cumCasesBySpecimenDateRate","newCasesBySpecimenDate":"newCasesBySpecimenDate","cumCasesBySpecimenDate":"cumCasesBySpecimenDate","newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate","cumDeaths28DaysByPublishDate":"cumDeaths28DaysByPublishDate","cumDeaths28DaysByPublishDateRate":"cumDeaths28DaysByPublishDateRate","newDeaths28DaysByDeathDate":"newDeaths28DaysByDeathDate","cumDeaths28DaysByDeathDate":"cumDeaths28DaysByDeathDate","cumDeaths28DaysByDeathDateRate":"cumDeaths28DaysByDeathDateRate","maleCases":"maleCases","femaleCases":"femaleCases","newPillarOneTestsByPublishDate":"newPillarOneTestsByPublishDate","cumPillarOneTestsByPublishDate":"cumPillarOneTestsByPublishDate","newPillarTwoTestsByPublishDate":"newPillarTwoTestsByPublishDate","cumPillarTwoTestsByPublishDate":"cumPillarTwoTestsByPublishDate","newPillarThreeTestsByPublishDate":"newPillarThreeTestsByPublishDate","cumPillarThreeTestsByPublishDate":"cumPillarThreeTestsByPublishDate","newAdmissions":"newAdmissions","cumAdmissions":"cumAdmissions","cumAdmissionsByAge":"cumAdmissionsByAge","cumTestsByPublishDate":"cumTestsByPublishDate","newTestsByPublishDate":"newTestsByPublishDate","covidOccupiedMVBeds":"covidOccupiedMVBeds","hospitalCases":"hospitalCases"}`;
+
   const throwOnNullUndefinedOrEmpty = (missingParam: string): string =>
     (() => {
       throw new Error(`Please provide a ${missingParam}.`);
@@ -22,13 +25,17 @@ export default (covidApiBaseUrl: string) => {
       : !areaFilter
       ? throwOnNullUndefinedOrEmpty("areaFilter")
       : !areaFilterValue
-      ? throwOnNullUndefinedOrEmpty("areFilterValue")
+      ? throwOnNullUndefinedOrEmpty("areaFilterValue")
       : `${covidApiBaseUrl}/v1/data?filters={date=${date
           .toISOString()
           .substring(
             0,
             10
-          )};areaType=${areaFilter};areaCode=${areaFilterValue}&structure={"date": "date","name": "areaName","code": "areaCode","newCasesPublished":"newCasesByPublishDate","newCasesBySpecimen":"newCasesBySpecimenDate","newDeathsPublished":"newDeathsByPublishDate","rateOfCumulativeCasesBySpecimenDate":"cumCasesBySpecimenDateRate","cumulativeCasesBySpecimen":"cumCasesBySpecimenDate","rateOfCumulativeDeathsBySpecimen":"cumCasesBySpecimenDateRate","cumulativeDeathsBySpecimen":"cumCasesBySpecimenDate","newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate","cumulativeDeaths28DaysByPublishDate":"cumDeaths28DaysByPublishDate","cumulativeDeaths28DaysByPublishDateRate":"cumDeaths28DaysByPublishDateRate"}`;
+          )};areaType=${areaFilter};areaCode=${areaFilterValue}&structure=${
+          areaFilter === "ltla"
+            ? localAuthorityRequestDataStructure
+            : nationRequestDataStructure
+        }`;
 
   return {
     build: (date: Date, areaFilter: AreaFilter, areaFilterValue: string) =>

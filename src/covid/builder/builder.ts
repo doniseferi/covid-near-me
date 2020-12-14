@@ -1,4 +1,8 @@
-import { CovidRepository } from "../interfaces/covid";
+import {
+  CovidStatistics,
+  NationalCovidStatistics,
+  StatisticsRepository,
+} from "../interfaces/covid";
 import { LocalAuthority } from "../../location/interfaces/localAuthority";
 import httpClient from "../infastructure/index";
 import repository, { HttpClient } from "../repository/covidRepository";
@@ -33,14 +37,14 @@ export default (
   const circuitBreaker = circuitBreakerBuilder(resiliencyConfig)
     .build(
       async (localAuthority: LocalAuthority, date: Date) =>
-        await repo.getAsync(localAuthority, date)
+        await repo.getAsync<CovidStatistics>(localAuthority, date)
     )
     .withFallBack(
       async (localAuthority: LocalAuthority, date: Date) =>
-        await fallback.getAsync(localAuthority, date)
+        await fallback.getAsync<NationalCovidStatistics>(localAuthority, date)
     );
 
-  const covidRepository: CovidRepository = {
+  const covidRepository: StatisticsRepository = {
     getAsync: async (localAuthority: LocalAuthority, date: Date) =>
       await circuitBreaker.executeResiliently(localAuthority, date),
   };

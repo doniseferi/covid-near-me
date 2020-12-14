@@ -1,40 +1,118 @@
-import { LocalInformation } from "../handler";
+import { CovidStatistics, NationalCovidStatistics } from "../covid";
+import { AgeStatistics } from "../covid/interfaces/covid";
+import { isNationalCovidStatisticsType } from "../utils";
+import DescriptionList, { DecriptionItem } from "./DescriptionList";
 
-const Covid = ({ location, covid }: LocalInformation) => (
-  <dl>
-    <dt>local authority</dt>
-    <dd>{location.code}</dd>
+const ageStatistics = (
+  term: string,
+  statistics: AgeStatistics[]
+): DecriptionItem[] =>
+  (
+    statistics?.map((e) => [
+      { term: `${term} by age (${e.age})`, description: `${e.value ?? ""}` },
+      {
+        term: `rate of ${term} by age (${e.age})`,
+        description: `${e.rate ?? ""}`,
+      },
+    ]) ?? []
+  ).reduce((accumulator, value) => accumulator.concat(value), []);
 
-    <dt>newCasesPublished</dt>
-    <dd>{covid.newCasesPublished}</dd>
+const covidStatistics = (statistics: CovidStatistics): DecriptionItem[] =>
+  [
+    { term: "location", description: statistics.areaName },
+    {
+      term: "date",
+      description: `${new Date(statistics.date).toDateString()}`,
+    },
+    {
+      term: "new cases",
+      description: `${statistics.newCasesByPublishDate ?? ""}`,
+    },
+    {
+      term: "cumulative cases",
+      description: `${statistics.cumCasesByPublishDate ?? ""}`,
+    },
+    {
+      term: "new positive cases collected on date",
+      description: `${statistics.newCasesBySpecimenDate ?? ""}`,
+    },
+    {
+      term:
+        "rate of cumulative cases by specimen date per 100k resident population",
+      description: `${statistics.cumCasesBySpecimenDateRate ?? ""}`,
+    },
+    {
+      term: "cumulative cases by specimen date per 100k resident population",
+      description: `${statistics.cumCasesBySpecimenDate ?? ""}`,
+    },
+    {
+      term: "cumulative cases by specimen date per 100k resident population",
+      description: `${statistics.cumCasesBySpecimenDate ?? ""}`,
+    },
+    {
+      term: "deaths within 28 days of positive test",
+      description: `${statistics.newDeaths28DaysByPublishDate ?? ""}`,
+    },
+    {
+      term: "cumulative deaths within 28 days of positive test",
+      description: `${statistics.cumDeaths28DaysByPublishDate ?? ""}`,
+    },
+    {
+      term:
+        "rate of cumulative deaths within 28 days of positive test per 100k",
+      description: `${statistics.newDeaths28DaysByDeathDate ?? ""}`,
+    },
+    {
+      term: "deaths within 28 days of positive test by death date",
+      description: `${statistics.newDeaths28DaysByDeathDate ?? ""}`,
+    },
+    {
+      term: "cumulative deaths within 28 days of positive test by death date",
+      description: `${statistics.cumDeaths28DaysByDeathDate ?? ""}`,
+    },
+    {
+      term:
+        "rate of cumulative deaths within 28 days of positive test by death date per 100k resident population",
+      description: `${statistics.cumDeaths28DaysByDeathDateRate ?? ""}`,
+    },
+  ].concat(
+    isNationalCovidStatisticsType(statistics)
+      ? [
+          {
+            term: "new hospital admissions",
+            description: `${statistics.newAdmissions ?? "" ?? ""}`,
+          },
+          {
+            term: "cumulative number of hopsital admissions",
+            description: `${statistics.cumAdmissions ?? ""}`,
+          },
+          {
+            term: "cumulative tests",
+            description: `${statistics.cumTestsByPublishDate ?? ""}`,
+          },
+          {
+            term: "new tests",
+            description: `${statistics.newTestsByPublishDate ?? ""}`,
+          },
+          {
+            term: "covid-19 occupied beds with mechanical ventilators",
+            description: `${statistics.covidOccupiedMVBeds ?? ""}`,
+          },
+          {
+            term: "hospital cases",
+            description: `${statistics.hospitalCases ?? ""}`,
+          },
+        ]
+          .concat(ageStatistics("male cases", statistics.maleCases ?? []))
+          .concat(ageStatistics("female cases", statistics.femaleCases ?? []))
+          .concat(
+            ageStatistics("cumulative admissions", statistics.femaleCases ?? [])
+          )
+      : []
+  );
 
-    <dt>newCasesBySpecimen</dt>
-    <dd>{covid.newCasesBySpecimen}</dd>
-
-    <dt>newDeathsPublished</dt>
-    <dd>{covid.newDeathsPublished}</dd>
-
-    <dt>rateOfCumulativeCasesBySpecimenDate</dt>
-    <dd>{covid.rateOfCumulativeCasesBySpecimenDate}</dd>
-
-    <dt>cumulativeCasesBySpecimen</dt>
-    <dd>{covid.cumulativeCasesBySpecimen}</dd>
-
-    <dt>rateOfCumulativeDeathsBySpecimen</dt>
-    <dd>{covid.rateOfCumulativeDeathsBySpecimen}</dd>
-
-    <dt>cumulativeDeathsBySpecimen</dt>
-    <dd>{covid.cumulativeDeathsBySpecimen}</dd>
-
-    <dt>newDeaths28DaysByPublishDate</dt>
-    <dd>{covid.newDeaths28DaysByPublishDate}</dd>
-
-    <dt>cumulativeDeaths28DaysByPublishDate</dt>
-    <dd>{covid.cumulativeDeaths28DaysByPublishDate}</dd>
-
-    <dt>cumulativeDeaths28DaysByPublishDateRate</dt>
-    <dd>{covid.cumulativeDeaths28DaysByPublishDateRate}</dd>
-  </dl>
-);
+const Covid = (statistics: CovidStatistics | NationalCovidStatistics) => {
+  return DescriptionList(covidStatistics(statistics));
+};
 
 export default Covid;

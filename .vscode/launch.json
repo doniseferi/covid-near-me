@@ -2,34 +2,26 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Jest Tests",
       "type": "node",
       "request": "launch",
-      "runtimeArgs": [
-        "--inspect-brk",
-        "${workspaceRoot}/node_modules/jest/bin/jest.js",
-        "--runInBand"
+      "name": "Debug Tests",
+      "program": "${workspaceRoot}/node_modules/.bin/jest",
+      "cwd": "${workspaceRoot}",
+      "args": [
+        "--i",
+        "--config",
+        "jest.config.js"
       ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "port": 9229
-    },{
+      "windows": {
+        "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+      }
+    },
+    {
       "type": "node",
       "request": "launch",
-      "name": "Next: Node",
-      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/next",
-      "envFile": "${workspaceFolder}/.env.local",
-      "port": 9229,
-      "console": "integratedTerminal"
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Next: Full",
-      "configurations": [
-        "Next: Node",
-        "Next: Chrome"
-      ]
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/node_modules/next/dist/bin/next",
+        "envFile": "${workspaceFolder}/src/.env.local",
     }
   ]
 }
