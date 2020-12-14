@@ -15,10 +15,10 @@ describe("Covid Repository", () => {
 
   test.concurrent.each`
     latitude      | longitude     | newCasesByPublishDate | cumCasesByPublishDate | cumCasesBySpecimenDateRate | newCasesBySpecimenDate | cumCasesBySpecimenDate | newDeaths28DaysByPublishDate | cumDeaths28DaysByPublishDate | cumDeaths28DaysByPublishDateRate | newDeaths28DaysByDeathDate | cumDeaths28DaysByDeathDate | cumDeaths28DaysByDeathDateRate
-    ${55.2408073} | ${-6.5115552} | ${79}                 | ${1078}| ${784.3}| ${59}| ${1136}| ${0}| ${39}| ${26.9}| ${0}| ${39}| ${26.9}
-    ${51.500729}  | ${-0.124625}  | ${44}                 | ${null} | ${659.7} | ${30} | ${1724} | ${0} | ${134} | ${51.3} | ${2} | ${136} | ${52}
-    ${53.0684881} | ${-4.0764504} | ${16} | ${921} | ${778.7} | ${11} | ${970} | ${0} | ${null} | ${null} | ${null} | ${null} | ${null}
-    ${56.9459695} | ${-2.2110162} | ${8}                  | ${800} | ${313.2} | ${9} | ${818} | ${0} | ${59} | ${22.6} | ${0} | ${59} | ${22.6}
+    ${55.2408073} | ${-6.5115552} | ${79}                 | ${1078}               | ${782.9}                   | ${59}                  | ${1134}                | ${0}                         | ${39}                        | ${26.9}                          | ${0}                       | ${39}                      | ${26.9}
+    ${51.500729}  | ${-0.124625}  | ${44}                 | ${null}               | ${660.5}                   | ${30}                  | ${1726}                | ${0}                         | ${134}                       | ${51.3}                          | ${2}                       | ${136}                     | ${52}
+    ${53.0684881} | ${-4.0764504} | ${16}                 | ${921}                | ${778.7}                   | ${11}                  | ${970}                 | ${0}                         | ${null}                      | ${null}                          | ${null}                    | ${null}                    | ${null}
+    ${56.9459695} | ${-2.2110162} | ${8}                  | ${800}                | ${313.2}                   | ${9}                   | ${818}                 | ${0}                         | ${59}                        | ${22.6}                          | ${0}                       | ${59}                      | ${22.6}
     `(
     "returns covid data for local authorities",
     async ({
