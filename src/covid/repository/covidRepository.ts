@@ -27,8 +27,8 @@ export default (
     date: Date
   ): Promise<T> => {
     const url = covidUrlQueryHandler.getUrl(localAuthority, date);
-    const result = await httpClient.getAsync<{ data: T[] }>(url);
-    return result.data[0];
+    const { data } = await httpClient.getAsync<{ data: T[] }>(url);
+    return data[0];
   };
 
   return {
