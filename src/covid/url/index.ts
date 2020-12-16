@@ -1,6 +1,6 @@
 import { LocalAuthority } from "../../location/interfaces/localAuthority";
 import match from "../../match";
-import { England, Scotland, Wales, NorthernIreland } from "../constants/index";
+import { CountryCode } from "../constants/index";
 import config from "../../config/next.config";
 import builder from "./builder";
 
@@ -22,19 +22,19 @@ const getNationalCovidApiUrl = (
   const nation = match(localAuthority.code.charAt(0).toLowerCase())
     .on(
       (char) => char === "e",
-      () => England
+      () => CountryCode.England
     )
     .on(
       (char) => char === "s",
-      () => Scotland
+      () => CountryCode.Scotland
     )
     .on(
       (char) => char === "w",
-      () => Wales
+      () => CountryCode.Wales
     )
     .on(
       (char) => char === "n",
-      () => NorthernIreland
+      () => CountryCode.NorthernIreland
     )
     .otherwise((char) => {
       throw new Error(
