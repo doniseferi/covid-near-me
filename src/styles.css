@@ -1,0 +1,20 @@
+dl {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+dl > * {
+  padding-top: 1.5em;
+}
+dt {
+  width: 40%;
+  font-weight: bold;
+  text-align: right;
+}
+dd {
+  width: 40%;
+  padding-left: 1em;
+  margin-left: 0px;
+}
