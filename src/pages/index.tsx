@@ -1,4 +1,4 @@
-import Covid from "../components/covid";
+import Covid from "../components/Covid";
 import useGeoCoordinates from "../hooks/useGeoCoordinates";
 import useCovidStatistics from "../hooks/useCovidStatistics";
 
