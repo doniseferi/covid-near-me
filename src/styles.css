@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
+body {
+  font-family: Comfortaa, Tahoma, Sans-Serif;
+  text-transform: capitalize;
+}
+
 dl {
   display: flex;
   flex-wrap: wrap;
