@@ -1,12 +1,12 @@
 import { CovidStatistics, NationalCovidStatistics } from "../covid";
 import { AgeStatistics } from "../covid/interfaces/covid";
 import { isNationalCovidStatisticsType } from "../utils";
-import DescriptionList, { DecriptionItem } from "./DescriptionList";
+import DescriptionList, { DescriptionItem } from "./DescriptionList";
 
 const ageStatistics = (
   term: string,
   statistics: AgeStatistics[]
-): DecriptionItem[] =>
+): DescriptionItem[] =>
   (
     statistics?.map((e) => [
       { term: `${term} by age (${e.age})`, description: `${e.value ?? ""}` },
@@ -17,7 +17,7 @@ const ageStatistics = (
     ]) ?? []
   ).reduce((accumulator, value) => accumulator.concat(value), []);
 
-const covidStatistics = (statistics: CovidStatistics): DecriptionItem[] =>
+const covidStatistics = (statistics: CovidStatistics): DescriptionItem[] =>
   [
     { term: "location", description: statistics.areaName },
     {
@@ -112,7 +112,9 @@ const covidStatistics = (statistics: CovidStatistics): DecriptionItem[] =>
   );
 
 const Covid = (statistics: CovidStatistics | NationalCovidStatistics) => {
-  return DescriptionList(covidStatistics(statistics));
+  return (
+    <div className="card">{DescriptionList(covidStatistics(statistics))}</div>
+  );
 };
 
 export default Covid;

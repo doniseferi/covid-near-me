@@ -13,10 +13,10 @@ const skeleton: Covid = {
     },
   },
   statistics: {
+    date: `${new Date(Date.now()).toDateString()}`,
     areaType: "",
     areaName: "",
     areaCode: "",
-    date: "",
     newCasesByPublishDate: 0,
     cumCasesByPublishDate: 0,
     newCasesBySpecimenDate: 0,

@@ -1,14 +1,15 @@
 import React from "react";
 import { uuidv4 } from "../utils";
+import styles from "./DescriptionList.module.css";
 
-export interface DecriptionItem {
+export interface DescriptionItem {
   term: string;
   description: string;
 }
 
 const shouldRender = (
-  value: DecriptionItem | null | undefined
-): value is DecriptionItem =>
+  value: DescriptionItem | null | undefined
+): value is DescriptionItem =>
   value !== null &&
   value !== undefined &&
   value.term !== null &&
@@ -18,12 +19,16 @@ const shouldRender = (
   value.description !== undefined &&
   value.description !== "";
 
-const descriptionItems = (items: DecriptionItem[]) =>
+const descriptionItems = (items: DescriptionItem[]) =>
   items.filter(shouldRender).map((kvp) => (
     <React.Fragment key={uuidv4()}>
-      <dt>{kvp.term}</dt>
-      <dd>{kvp.description}</dd>
+      <dt className={styles.term}>{kvp.term}</dt>
+      <dd className={styles.details}>{kvp.description}</dd>
     </React.Fragment>
   ));
 
-export default (items: DecriptionItem[]) => <dl>{descriptionItems(items)}</dl>;
+const DescriptionList = (items: DescriptionItem[]) => (
+  <dl className={styles.list}>{descriptionItems(items)}</dl>
+);
+
+export default DescriptionList;

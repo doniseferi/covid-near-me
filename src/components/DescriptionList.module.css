@@ -1,0 +1,23 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.list > * {
+  padding: 0.5em 0;
+}
+
+.term {
+  width: 40%;
+  font-weight: bold;
+  text-transform: capitalize;
+  text-align: right;
+}
+
+.details {
+  width: 40%;
+  padding-left: 1em;
+  margin-left: 0;
+}
