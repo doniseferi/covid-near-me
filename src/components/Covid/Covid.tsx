@@ -1,7 +1,9 @@
-import { CovidStatistics, NationalCovidStatistics } from "../covid";
-import { AgeStatistics } from "../covid/interfaces/covid";
-import { isNationalCovidStatisticsType } from "../utils";
-import DescriptionList, { DescriptionItem } from "./DescriptionList";
+import { CovidStatistics, NationalCovidStatistics } from "../../covid";
+import { AgeStatistics } from "../../covid/interfaces/covid";
+import { isNationalCovidStatisticsType } from "../../utils";
+import DescriptionList, {
+  DescriptionItem,
+} from "../DescriptionList/DescriptionList";
 
 const ageStatistics = (
   term: string,
@@ -112,9 +114,7 @@ const covidStatistics = (statistics: CovidStatistics): DescriptionItem[] =>
   );
 
 const Covid = (statistics: CovidStatistics | NationalCovidStatistics) => {
-  return (
-    <div className="card">{DescriptionList(covidStatistics(statistics))}</div>
-  );
+  return DescriptionList(covidStatistics(statistics));
 };
 
 export default Covid;

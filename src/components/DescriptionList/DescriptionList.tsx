@@ -1,5 +1,5 @@
 import React from "react";
-import { uuidv4 } from "../utils";
+import { uuidv4 } from "../../utils";
 import styles from "./DescriptionList.module.css";
 
 export interface DescriptionItem {
@@ -19,7 +19,7 @@ const shouldRender = (
   value.description !== undefined &&
   value.description !== "";
 
-const descriptionItems = (items: DescriptionItem[]) =>
+const DescriptionItems = (items: DescriptionItem[]) =>
   items.filter(shouldRender).map((kvp) => (
     <React.Fragment key={uuidv4()}>
       <dt className={styles.term}>{kvp.term}</dt>
@@ -28,7 +28,7 @@ const descriptionItems = (items: DescriptionItem[]) =>
   ));
 
 const DescriptionList = (items: DescriptionItem[]) => (
-  <dl className={styles.list}>{descriptionItems(items)}</dl>
+  <dl className={styles.list}>{DescriptionItems(items)}</dl>
 );
 
 export default DescriptionList;
