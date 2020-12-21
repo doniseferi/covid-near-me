@@ -79,37 +79,50 @@ const covidStatistics = (statistics: CovidStatistics): DescriptionItem[] =>
     },
   ].concat(
     isNationalCovidStatisticsType(statistics)
-      ? [
-          {
-            term: "new hospital admissions",
-            description: `${statistics.newAdmissions ?? "" ?? ""}`,
-          },
-          {
-            term: "cumulative number of hopsital admissions",
-            description: `${statistics.cumAdmissions ?? ""}`,
-          },
-          {
-            term: "cumulative tests",
-            description: `${statistics.cumTestsByPublishDate ?? ""}`,
-          },
-          {
-            term: "new tests",
-            description: `${statistics.newTestsByPublishDate ?? ""}`,
-          },
-          {
-            term: "covid-19 occupied beds with mechanical ventilators",
-            description: `${statistics.covidOccupiedMVBeds ?? ""}`,
-          },
-          {
-            term: "hospital cases",
-            description: `${statistics.hospitalCases ?? ""}`,
-          },
-        ]
-          .concat(ageStatistics("male cases", statistics.maleCases ?? []))
-          .concat(ageStatistics("female cases", statistics.femaleCases ?? []))
+      ? (
+          (statistics.maleCases &&
+            ageStatistics("male cases", statistics.maleCases)) ??
+          []
+        )
           .concat(
-            ageStatistics("cumulative admissions", statistics.femaleCases ?? [])
+            (statistics.femaleCases &&
+              ageStatistics("female cases", statistics.femaleCases)) ??
+              []
           )
+          .concat(
+            (statistics.cumAdmissionsByAge &&
+              ageStatistics(
+                "cumulative admissions",
+                statistics.cumAdmissionsByAge
+              )) ??
+              []
+          )
+          .concat([
+            {
+              term: "new hospital admissions",
+              description: `${statistics.newAdmissions ?? "" ?? ""}`,
+            },
+            {
+              term: "cumulative number of hopsital admissions",
+              description: `${statistics.cumAdmissions ?? ""}`,
+            },
+            {
+              term: "cumulative tests",
+              description: `${statistics.cumTestsByPublishDate ?? ""}`,
+            },
+            {
+              term: "new tests",
+              description: `${statistics.newTestsByPublishDate ?? ""}`,
+            },
+            {
+              term: "covid-19 occupied beds with mechanical ventilators",
+              description: `${statistics.covidOccupiedMVBeds ?? ""}`,
+            },
+            {
+              term: "hospital cases",
+              description: `${statistics.hospitalCases ?? ""}`,
+            },
+          ])
       : []
   );
 
