@@ -1,12 +1,14 @@
-import { CovidStatistics, NationalCovidStatistics } from "../covid";
-import { AgeStatistics } from "../covid/interfaces/covid";
-import { isNationalCovidStatisticsType } from "../utils";
-import DescriptionList, { DecriptionItem } from "./DescriptionList";
+import { CovidStatistics, NationalCovidStatistics } from "../../covid";
+import { AgeStatistics } from "../../covid/interfaces/covid";
+import { isNationalCovidStatisticsType } from "../../utils";
+import DescriptionList, {
+  DescriptionItem,
+} from "../DescriptionList/DescriptionList";
 
 const ageStatistics = (
   term: string,
   statistics: AgeStatistics[]
-): DecriptionItem[] =>
+): DescriptionItem[] =>
   (
     statistics?.map((e) => [
       { term: `${term} by age (${e.age})`, description: `${e.value ?? ""}` },
@@ -17,7 +19,7 @@ const ageStatistics = (
     ]) ?? []
   ).reduce((accumulator, value) => accumulator.concat(value), []);
 
-const covidStatistics = (statistics: CovidStatistics): DecriptionItem[] =>
+const covidStatistics = (statistics: CovidStatistics): DescriptionItem[] =>
   [
     { term: "location", description: statistics.areaName },
     {
@@ -77,37 +79,50 @@ const covidStatistics = (statistics: CovidStatistics): DecriptionItem[] =>
     },
   ].concat(
     isNationalCovidStatisticsType(statistics)
-      ? [
-          {
-            term: "new hospital admissions",
-            description: `${statistics.newAdmissions ?? "" ?? ""}`,
-          },
-          {
-            term: "cumulative number of hopsital admissions",
-            description: `${statistics.cumAdmissions ?? ""}`,
-          },
-          {
-            term: "cumulative tests",
-            description: `${statistics.cumTestsByPublishDate ?? ""}`,
-          },
-          {
-            term: "new tests",
-            description: `${statistics.newTestsByPublishDate ?? ""}`,
-          },
-          {
-            term: "covid-19 occupied beds with mechanical ventilators",
-            description: `${statistics.covidOccupiedMVBeds ?? ""}`,
-          },
-          {
-            term: "hospital cases",
-            description: `${statistics.hospitalCases ?? ""}`,
-          },
-        ]
-          .concat(ageStatistics("male cases", statistics.maleCases ?? []))
-          .concat(ageStatistics("female cases", statistics.femaleCases ?? []))
+      ? (
+          (statistics.maleCases &&
+            ageStatistics("male cases", statistics.maleCases)) ??
+          []
+        )
           .concat(
-            ageStatistics("cumulative admissions", statistics.femaleCases ?? [])
+            (statistics.femaleCases &&
+              ageStatistics("female cases", statistics.femaleCases)) ??
+              []
           )
+          .concat(
+            (statistics.cumAdmissionsByAge &&
+              ageStatistics(
+                "cumulative admissions",
+                statistics.cumAdmissionsByAge
+              )) ??
+              []
+          )
+          .concat([
+            {
+              term: "new hospital admissions",
+              description: `${statistics.newAdmissions ?? "" ?? ""}`,
+            },
+            {
+              term: "cumulative number of hopsital admissions",
+              description: `${statistics.cumAdmissions ?? ""}`,
+            },
+            {
+              term: "cumulative tests",
+              description: `${statistics.cumTestsByPublishDate ?? ""}`,
+            },
+            {
+              term: "new tests",
+              description: `${statistics.newTestsByPublishDate ?? ""}`,
+            },
+            {
+              term: "covid-19 occupied beds with mechanical ventilators",
+              description: `${statistics.covidOccupiedMVBeds ?? ""}`,
+            },
+            {
+              term: "hospital cases",
+              description: `${statistics.hospitalCases ?? ""}`,
+            },
+          ])
       : []
   );
 

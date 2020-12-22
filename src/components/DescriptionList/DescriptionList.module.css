@@ -1,0 +1,24 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  line-height: 2.5ch;
+}
+
+.list > * {
+  padding: 0.4em 0;
+}
+
+.term {
+  width: 40%;
+  text-align: right;
+  font-weight: 600;
+}
+
+.details {
+  width: 40%;
+  padding-left: 0.75em;
+  margin-left: 0;
+}
