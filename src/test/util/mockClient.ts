@@ -6,7 +6,9 @@ export interface MockConfig {
 export default (mockConfig: MockConfig) => {
   const sleep = (delayInMilliseconds: number) => {
     const e = new Date().getTime() + delayInMilliseconds;
-    while (new Date().getTime() <= e) {}
+    while (new Date().getTime() <= e) {
+      ("snooze");
+    }
   };
   const timeout = <T>(url: string): Promise<HttpResponseMessage<T>> => {
     url;
