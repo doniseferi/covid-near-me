@@ -7,7 +7,12 @@ import React from "react";
 const Index = () => {
   const geoCoordinates = useGeoCoordinates();
   const localInformation = useCovidStatistics(geoCoordinates);
-  return <Container>{Covid(localInformation.statistics)}</Container>;
+  return (
+    <Container>
+      {Banner("covid near me")}
+      {Covid(localInformation.statistics)}
+    </Container>
+  );
 };
 
 export default Index;
