@@ -1,6 +1,6 @@
-import styles from "./Banner.module.css";
+import styles from "./Header.module.css";
 
-const Banner = (text: string) =>
+const Header = (text: string) =>
   text ? (
     <header className={styles.nav}>
       <h1>{text}</h1>
@@ -9,4 +9,4 @@ const Banner = (text: string) =>
     {}
   );
 
-export default Banner;
+export default Header;

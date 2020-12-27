@@ -1,4 +1,4 @@
-import Banner from "../components/Banner/Banner";
+import Header from "../components/Header/Header";
 import Container from "../components/Container/Container";
 import Covid from "../components/Covid/Covid";
 import useGeoCoordinates from "../hooks/useGeoCoordinates";
@@ -9,7 +9,7 @@ const Index = () => {
   const localInformation = useCovidStatistics(geoCoordinates);
   return (
     <Container>
-      {Banner("covid near me")}
+      {Header("covid near me")}
       {Covid(localInformation.statistics)}
     </Container>
   );
