@@ -1,13 +1,10 @@
 .container {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 4em;
+  margin: 4.1em auto 1em auto;
   padding: 0.5em 0;
   box-shadow: 0 0 16px 2px rgba(0, 0, 0, 0.4);
   transition: 0.3s;
   border-radius: 5px;
   background-color: #f5df4d;
-  margin-bottom: 1em;
 }
 
 /* Extra small devices (phones, 600px and down) */
