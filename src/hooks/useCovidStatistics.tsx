@@ -42,13 +42,9 @@ const skeleton: Covid = {
 
 const useCovidStatistics = (geoCoordinates: GeoCoordinates) => {
   const areDefaultGeoCoordinates = (geoCoordinates: GeoCoordinates) =>
-    geoCoordinates.latitude === 0 && geoCoordinates.longitude == 0;
+    geoCoordinates.latitude === 0 && geoCoordinates.longitude === 0;
 
   const [localInformation, setLocalInformation] = useState<Covid>(skeleton);
-  useEffect(() => {
-    fetchData();
-  }, [`${geoCoordinates.latitude}{${geoCoordinates.longitude}`]);
-
   const fetchData = async () => {
     if (!areDefaultGeoCoordinates(geoCoordinates)) {
       const url = `/api/covid?latitude=${geoCoordinates.latitude}&longitude=${geoCoordinates.longitude}`;
@@ -57,6 +53,10 @@ const useCovidStatistics = (geoCoordinates: GeoCoordinates) => {
       // TODO: catch error log and rethrow
     }
   };
+  useEffect(() => {
+    fetchData();
+  }, [`${geoCoordinates.latitude}{${geoCoordinates.longitude}`]);
+
   return { ...localInformation };
 };
 

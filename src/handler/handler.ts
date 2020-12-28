@@ -18,7 +18,7 @@ export interface CovidQueryHandler {
   handleAsync: (geoCoordinates: GeoCoordinates, date: Date) => Promise<Covid>;
 }
 
-export default (
+const handler = (
   localAuthorityRepository: LocalAuthorityRepository,
   covidRepository: StatisticsRepository
 ): CovidQueryHandler => {
@@ -43,3 +43,5 @@ export default (
       await handle(geoCoordinates, date),
   };
 };
+
+export default handler;

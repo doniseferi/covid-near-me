@@ -3,7 +3,7 @@ import { HttpResponseMessage } from "../../covid/infastructure/httpClient";
 export interface MockConfig {
   delayInMilliseoconds: number;
 }
-export default (mockConfig: MockConfig) => {
+const mockClient = (mockConfig: MockConfig) => {
   const sleep = (delayInMilliseconds: number) => {
     const e = new Date().getTime() + delayInMilliseconds;
     while (new Date().getTime() <= e) {
@@ -26,3 +26,5 @@ export default (mockConfig: MockConfig) => {
     unexpectedServerError: <T>(url: string) => unexpectedServerError<T>(url),
   };
 };
+
+export default mockClient;

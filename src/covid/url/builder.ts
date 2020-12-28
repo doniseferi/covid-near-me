@@ -1,6 +1,6 @@
 export type AreaFilter = "ltla" | "nation";
 
-export default (covidApiBaseUrl: string) => {
+const builder = (covidApiBaseUrl: string) => {
   if (!covidApiBaseUrl) {
     throw new ReferenceError(
       "Covid Api Base Url is null, undefined, empty or whitespace. Please provide a Covid Api Base Url"
@@ -42,3 +42,5 @@ export default (covidApiBaseUrl: string) => {
       build(date, areaFilter, areaFilterValue),
   };
 };
+
+export default builder;

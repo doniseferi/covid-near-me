@@ -14,7 +14,9 @@ interface Repository {
   }>;
 }
 
-export default (repository: Repository): LocalAuthorityRepository => {
+const localAuthorityRepository = (
+  repository: Repository
+): LocalAuthorityRepository => {
   if (!repository) {
     throw new ReferenceError(
       "Dependency not satisfied. LocalAuthorityRepository has a dependency on Repository."
@@ -23,7 +25,7 @@ export default (repository: Repository): LocalAuthorityRepository => {
 
   const throwCoordinatesNotFoundError = (latitude: number, longitude: number) =>
     (() => {
-      throw Error(
+      throw new Error(
         `latitude: ${latitude} and longitude: ${longitude} is not in` +
           ` the United Kingdom. Please provide geo coordinates that fall within` +
           ` the boundaries of the United Kingdom.`
@@ -52,3 +54,5 @@ export default (repository: Repository): LocalAuthorityRepository => {
       await getAsync(geoCoordinates),
   };
 };
+
+export default localAuthorityRepository;

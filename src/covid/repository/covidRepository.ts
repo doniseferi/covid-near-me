@@ -13,7 +13,7 @@ export interface HttpClient {
   getAsync: <T>(url: string) => Promise<T>;
 }
 
-export default (
+const covidRepository = (
   covidUrlQueryHandler: GetCovidApiUrl,
   httpClient: HttpClient
 ): CovidRepository => {
@@ -38,3 +38,5 @@ export default (
     ) => await getAsync<T>(localAuthority, date),
   };
 };
+
+export default covidRepository;

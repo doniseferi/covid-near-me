@@ -14,7 +14,7 @@ import {
   getCovidDataByLocalAuthorityUrl,
 } from "../url/index";
 
-export default (
+const builder = (
   resiliencyConfig: ResiliencyConfig,
   localAuthorityHttpClient: HttpClient = httpClient,
   nationalCovidHttpClient: HttpClient = httpClient
@@ -52,3 +52,5 @@ export default (
     build: () => covidRepository,
   };
 };
+
+export default builder;
