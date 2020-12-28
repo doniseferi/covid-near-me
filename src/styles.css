@@ -2,10 +2,11 @@
 
 body {
   font-family: "Trocchi", Tahoma, Sans-Serif;
-  font-size: 1m;
+  font-size: 1em;
   color: #7c795d;
   letter-spacing: 0.2ch;
   line-height: 1em;
+  text-transform: capitalize;
 
   background: linear-gradient(
     270deg,
