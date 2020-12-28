@@ -4,7 +4,7 @@ interface LocalAuthorityResult {
   local_authority_code: string;
 }
 
-export default (connectionString: string) => {
+const postgresRepository = (connectionString: string) => {
   if (!connectionString) {
     throw new ReferenceError(
       "Dependency not satisfied. PostgresRepository has a dependency on a connection string or ClientConfig."
@@ -38,3 +38,5 @@ export default (connectionString: string) => {
     ): Promise<LocalAuthorityResult> => await queryAsync(latitude, longitude),
   };
 };
+
+export default postgresRepository;

@@ -25,9 +25,11 @@ const throwLatitudeError = (value: number) =>
 const throwLongitudeError = (value: number) =>
   throwRangeError(value, "longitude");
 
-export default (latitude: number, longitude: number): GeoCoordinates =>
+const geoCoordinates = (latitude: number, longitude: number): GeoCoordinates =>
   latitude < minimumLatitude || latitude > maximumLatitude
     ? throwLatitudeError(latitude)
     : longitude < minimumLongitude || longitude > maximumLongitude
     ? throwLongitudeError(longitude)
     : { latitude, longitude };
+
+export default geoCoordinates;

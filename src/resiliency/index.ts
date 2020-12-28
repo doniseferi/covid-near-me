@@ -12,7 +12,7 @@ export default (resiliencyConfig: ResiliencyConfig) => {
   ) => {
     if (!target) {
       throw new ReferenceError(
-        `Please provide a fallback method you wish to execute resiliently.`
+        "Please provide a fallback method you wish to execute resiliently."
       );
     }
 

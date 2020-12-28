@@ -5,7 +5,7 @@ import useGeoCoordinates from "../hooks/useGeoCoordinates";
 import useCovidStatistics from "../hooks/useCovidStatistics";
 import React from "react";
 
-const Index = () => {
+const index = () => {
   const geoCoordinates = useGeoCoordinates();
   const localInformation = useCovidStatistics(geoCoordinates);
   return (
@@ -16,4 +16,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default index;

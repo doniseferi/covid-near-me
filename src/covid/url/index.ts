@@ -7,7 +7,7 @@ import builder from "./builder";
 const getCovidApiBaseUrl = () =>
   config.covidApiBaseUrl ??
   (() => {
-    throw ReferenceError("Covid Api Base Url is null, undefined or empty.");
+    throw new ReferenceError("Covid Api Base Url is null, undefined or empty.");
   })();
 
 const getCovidDataByLocalAuthorityUrl = (

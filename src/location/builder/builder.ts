@@ -6,7 +6,7 @@ import circuitBreakerBuilder, {
   ResiliencyConfig,
 } from "../../resiliency/index";
 
-export default (
+const builder = (
   resiliencyConfig: ResiliencyConfig,
   connectionString: string
 ) => {
@@ -35,3 +35,5 @@ export default (
     build: () => resilientLocalAuthorityRepository,
   };
 };
+
+export default builder;
