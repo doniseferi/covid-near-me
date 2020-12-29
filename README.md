@@ -26,4 +26,4 @@ Using Npm:
 npm run compose
 ```
 
-The application will be available on port 3000 when the script successfully starts up.
+The application will be available on port 3000 when the script successfully executes.
