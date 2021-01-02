@@ -8,7 +8,7 @@
 A responsive web application that gets the users current location and returns covid statistics for the local authority the location is covered by.
 
 <p align="center" background-color="white">
-<img src="./covid-near-me.gif"/> </p>
+<img src="https://github.com/doniseferi/covid-near-me/blob/master/covid-near-me.gif?sanitize=true&raw=true"/> </p>
 
 ***
 
