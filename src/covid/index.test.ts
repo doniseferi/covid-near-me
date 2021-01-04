@@ -193,3 +193,21 @@ describe("Fallback covid repository", () => {
     }
   );
 });
+
+describe("Records unavailable", () => {
+  test("Returns yesterdays results when todays records are not available", async () => {
+    const result = await covidRepository.getAsync(
+      {
+        code: "E09000033",
+        name: "Westminster",
+      },
+      new Date(Date.UTC(2021, 0, 5))
+    );
+    expect(result.date).toEqual("2021-01-04");
+    expect(result.cumCasesByPublishDate).toEqual(8461);
+    expect(result.newCasesByPublishDate).toEqual(181);
+    expect(result.newDeaths28DaysByPublishDate).toEqual(2);
+    expect(result.cumDeaths28DaysByPublishDate).toEqual(168);
+    expect(result.cumDeaths28DaysByPublishDateRate).toEqual(64.3);
+  });
+});

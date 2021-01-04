@@ -1,4 +1,6 @@
+import "../../augmentation/global";
 import { LocalAuthority } from "../../location/interfaces/localAuthority";
+import { HttpResponseMessage } from "../infastructure/httpClient";
 import {
   CovidRepository,
   CovidStatistics,
@@ -10,7 +12,7 @@ export interface GetCovidApiUrl {
 }
 
 export interface HttpClient {
-  getAsync: <T>(url: string) => Promise<T>;
+  getAsync: <T>(url: string) => Promise<HttpResponseMessage<T>>;
 }
 
 const covidRepository = (
@@ -27,8 +29,14 @@ const covidRepository = (
     date: Date
   ): Promise<T> => {
     const url = covidUrlQueryHandler.getUrl(localAuthority, date);
-    const { data } = await httpClient.getAsync<{ data: T[] }>(url);
-    return data[0];
+    const { status, data } = await httpClient.getAsync<{ data: T[] }>(url);
+    return status === 200
+      ? data.data[0]
+      : status === 204
+      ? getAsync(localAuthority, date.subtract(1))
+      : (() => {
+          throw new Error("Cannot retrieve covid statistics");
+        })();
   };
 
   return {
