@@ -4,12 +4,12 @@ services:
   web:
     image: "covid-near-me:${VERSION:-1}"
     restart: always
-    env_file: ./src/.env.local
+    env_file: ./.env.local
     environment:
       POSTGRES_HOST: db
     build:
       context: .
-      dockerfile: ./src/DOCKERFILE
+      dockerfile: ./DOCKERFILE
     ports:
       - "3000:3000"
     depends_on:

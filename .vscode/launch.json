@@ -21,7 +21,7 @@
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/node_modules/next/dist/bin/next",
-        "envFile": "${workspaceFolder}/src/.env.local",
+        "envFile": "${workspaceFolder}/.env.local",
     }
   ]
 }
