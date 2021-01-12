@@ -50,7 +50,6 @@ const useCovidStatistics = (geoCoordinates: GeoCoordinates) => {
       const url = `/api/covid?latitude=${geoCoordinates.latitude}&longitude=${geoCoordinates.longitude}`;
       const { data } = await axios.get<Covid>(url);
       setLocalInformation(data);
-      // TODO: catch error log and rethrow
     }
   };
   useEffect(() => {

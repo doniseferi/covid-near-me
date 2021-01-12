@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   web:
-    image: "covid-near-me:${VERSION:-1}"
+    image: "covid-near-me:1.0.0"
     restart: always
     env_file: ./.env.local
     environment:

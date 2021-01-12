@@ -21,10 +21,10 @@ describe("Covid Repository", () => {
   afterAll(() => mock.stop());
   test.each`
     localAuthorityCode | newCasesByPublishDate | cumCasesByPublishDate | cumCasesBySpecimenDateRate | newCasesBySpecimenDate | cumCasesBySpecimenDate | newDeaths28DaysByPublishDate | cumDeaths28DaysByPublishDate | cumDeaths28DaysByPublishDateRate | newDeaths28DaysByDeathDate | cumDeaths28DaysByDeathDate | cumDeaths28DaysByDeathDateRate
-    ${"E09000033"}     | ${44}                 | ${null}               | ${660.5}                   | ${30}                  | ${1726}                | ${0}                         | ${134}                       | ${51.3}                          | ${2}                       | ${136}                     | ${52}
-    ${"N09000004"}     | ${79}                 | ${1078}               | ${782.9}                   | ${59}                  | ${1134}                | ${0}                         | ${39}                        | ${26.9}                          | ${0}                       | ${39}                      | ${26.9}
-    ${"S12000034"}     | ${8}                  | ${800}                | ${313.2}                   | ${9}                   | ${818}                 | ${0}                         | ${59}                        | ${22.6}                          | ${0}                       | ${59}                      | ${22.6}
-    ${"W06000002"}     | ${16}                 | ${921}                | ${778.7}                   | ${11}                  | ${970}                 | ${0}                         | ${null}                      | ${null}                          | ${null}                    | ${null}                    | ${null}
+    ${"E09000033"}     | ${44}                 | ${null}               | ${661.3}                   | ${30}                  | ${1728}                | ${0}                         | ${134}                       | ${51.3}                          | ${2}                       | ${136}                     | ${52}
+    ${"N09000004"}     | ${79}                 | ${1078}               | ${782.3}                   | ${59}                  | ${1133}                | ${0}                         | ${39}                        | ${26.9}                          | ${0}                       | ${39}                      | ${26.9}
+    ${"S12000034"}     | ${8}                  | ${800}                | ${307}                     | ${8}                   | ${802}                 | ${0}                         | ${59}                        | ${22.6}                          | ${0}                       | ${59}                      | ${22.6}
+    ${"W06000002"}     | ${16}                 | ${921}                | ${780.3}                   | ${11}                  | ${972}                 | ${null}                      | ${null}                      | ${null}                          | ${null}                    | ${null}                    | ${null}
   `(
     "returns covid data for local authorities",
     async ({
@@ -192,4 +192,22 @@ describe("Fallback covid repository", () => {
       expect(result.hospitalCases).toEqual(hospitalCases);
     }
   );
+});
+
+describe("Records unavailable", () => {
+  test("Returns yesterdays results when todays records are not available", async () => {
+    const result = await covidRepository.getAsync(
+      {
+        code: "E09000033",
+        name: "Westminster",
+      },
+      new Date(Date.UTC(2021, 0, 12))
+    );
+    expect(result.date).toEqual("2021-01-11");
+    expect(result.cumCasesByPublishDate).toEqual(10055);
+    expect(result.newCasesByPublishDate).toEqual(148);
+    expect(result.newDeaths28DaysByPublishDate).toEqual(3);
+    expect(result.cumDeaths28DaysByPublishDate).toEqual(185);
+    expect(result.cumDeaths28DaysByPublishDateRate).toEqual(70.8);
+  });
 });
